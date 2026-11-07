@@ -67,7 +67,7 @@ namespace aab
     mj::game_result aab_game::play([[maybe_unused]] const mj::game_data &data)
     {
         // add in dolphin
-        // dolphin.update();
+        dolphin.update();
 
         // Creates a game result indicating whether the game is finished and whether the title should be hidden early
         // For this game the game should end early if the player has won (if victory returns true)

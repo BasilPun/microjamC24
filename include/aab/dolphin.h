@@ -13,7 +13,6 @@ namespace aab
         Dolphin(bn::fixed_point starting_position, bn::fixed speed);
 
         void update();
-        void update_animation();
 
     private:
         bn::sprite_ptr sprite;
