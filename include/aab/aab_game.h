@@ -1,6 +1,7 @@
 #pragma once
 
 #include "mj/mj_game.h"
+#include "aab/dolphin.h"
 
 namespace aab
 {
@@ -63,5 +64,6 @@ namespace aab
         void fade_out(const mj::game_data &data) override;
 
     private:
+        Dolphin dolphin;
     };
 }
