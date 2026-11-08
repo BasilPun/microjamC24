@@ -1,6 +1,7 @@
 #include "aab_game.h"
 
 #include "mj/mj_game_list.h"
+#include "bn_regular_bg_items_oceanbg.h"
 
 // String arrays for the credits can go in an anonymous namespace
 namespace
@@ -29,7 +30,7 @@ namespace aab
      * @param completed_games how many microgames the player has completed so far
      * @param data shared information, such as a rng and number of frames left in the microgame
      */
-    aab_game::aab_game([[maybe_unused]] int completed_games, [[maybe_unused]] const mj::game_data &data) : mj::game("aab"), dolphin(Dolphin({-120, 0}, 0.5))
+    aab_game::aab_game([[maybe_unused]] int completed_games, [[maybe_unused]] const mj::game_data &data) : mj::game("aab"), dolphin(Dolphin({-120, 0}, 0.5)), background(bn::regular_bg_items::oceanbg.create_bg())
     {
         // play_sound(bn::sound_items::aub_tower, completed_games, data);
     }

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <bn_regular_bg_ptr.h>
+
 #include "mj/mj_game.h"
 #include "aab/dolphin.h"
 
@@ -65,5 +67,6 @@ namespace aab
 
     private:
         Dolphin dolphin;
+        bn::regular_bg_ptr background;
     };
 }
