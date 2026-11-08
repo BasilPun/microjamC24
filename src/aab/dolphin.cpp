@@ -10,7 +10,7 @@ namespace aab
      * @param speed how fast the dolphin will move across the screen
      */
     Dolphin::Dolphin(bn::fixed_point starting_position, bn::fixed speed) : sprite(bn::sprite_items::dolphin.create_sprite(starting_position)),
-                                                                           animate(bn::create_sprite_animate_action_forever(sprite, 30, bn::sprite_items::dolphin.tiles_item(), 0, 1, 2, 3, 4, 5)),
+                                                                           animate(bn::create_sprite_animate_action_forever(sprite, 10, bn::sprite_items::dolphin.tiles_item(), 0, 1, 2, 3, 4, 5)),
                                                                            speed(speed)
     {
     }
@@ -19,5 +19,11 @@ namespace aab
     {
         // animates dolphin sprite
         animate.update();
+        update_position(speed);
+    }
+
+    void Dolphin::update_position(bn::fixed speed)
+    {
+        sprite.set_x(sprite.x() + speed);
     }
 }
