@@ -3,6 +3,8 @@
 #include "mj/mj_game_list.h"
 #include "bn_regular_bg_items_oceanbg.h"
 
+#include "bn_camera_ptr.h"
+
 // String arrays for the credits can go in an anonymous namespace
 namespace
 {
@@ -67,8 +69,16 @@ namespace aab
      */
     mj::game_result aab_game::play([[maybe_unused]] const mj::game_data &data)
     {
+        // testing camera
+        bn::camera_ptr camera = bn::camera_ptr::create(0, 0);
+        dolphin.sprite.set_camera(camera);
+        background.set_camera(camera);
+
         // add in dolphin
         dolphin.update();
+
+        // updating camera
+        camera.set_position(dolphin.sprite.x(), dolphin.sprite.y());
 
         // Creates a game result indicating whether the game is finished and whether the title should be hidden early
         // For this game the game should end early if the player has won (if victory returns true)
