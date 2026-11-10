@@ -4,6 +4,7 @@
 
 #include "mj/mj_game.h"
 #include "aab/dolphin.h"
+#include "aab/swimmer.h"
 
 namespace aab
 {
@@ -67,6 +68,7 @@ namespace aab
 
     private:
         Dolphin dolphin;
+        Swimmer swimmer;
         bn::regular_bg_ptr background;
     };
 }

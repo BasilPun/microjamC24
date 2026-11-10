@@ -32,7 +32,7 @@ namespace aab
      * @param completed_games how many microgames the player has completed so far
      * @param data shared information, such as a rng and number of frames left in the microgame
      */
-    aab_game::aab_game([[maybe_unused]] int completed_games, [[maybe_unused]] const mj::game_data &data) : mj::game("aab"), dolphin(Dolphin({-120, 0}, 0.5)), background(bn::regular_bg_items::oceanbg.create_bg())
+    aab_game::aab_game([[maybe_unused]] int completed_games, [[maybe_unused]] const mj::game_data &data) : mj::game("aab"), dolphin(Dolphin({-120, 0}, 0.5)), swimmer(Swimmer({-120, 40})), background(bn::regular_bg_items::oceanbg.create_bg())
     {
         // play_sound(bn::sound_items::aub_tower, completed_games, data);
     }
@@ -44,7 +44,7 @@ namespace aab
      */
     bn::string<16> aab_game::title() const
     {
-        return "Dolphin";
+        return "Race the Dolphin";
     }
 
     /**
@@ -71,14 +71,15 @@ namespace aab
     {
         // testing camera
         bn::camera_ptr camera = bn::camera_ptr::create(0, 0);
-        dolphin.sprite.set_camera(camera);
+        swimmer.sprite.set_camera(camera);
         background.set_camera(camera);
 
         // add in dolphin
         dolphin.update();
+        swimmer.update();
 
         // updating camera
-        camera.set_position(dolphin.sprite.x(), dolphin.sprite.y());
+        camera.set_position(swimmer.sprite.x(), 0);
 
         // Creates a game result indicating whether the game is finished and whether the title should be hidden early
         // For this game the game should end early if the player has won (if victory returns true)
