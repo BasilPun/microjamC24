@@ -3,8 +3,8 @@
 #include <bn_regular_bg_ptr.h>
 
 #include "mj/mj_game.h"
-#include "aab/dolphin.h"
-#include "aab/swimmer.h"
+#include "aab/aab_dolphin.h"
+#include "aab/aab_swimmer.h"
 
 namespace aab
 {
