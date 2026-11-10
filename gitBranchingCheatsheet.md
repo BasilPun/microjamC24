@@ -15,3 +15,10 @@ The following steps are done by ONLY ONE PARTNER.
 1. Push your updated branch to your fork: `git push origin`
 1. Now, all of the other partners can pull down the merged changes on each branch: `git pull`
 
+## Making a new branch from a specific commit
+Want to make new branch that doesn't include all of your current commits?
+1. Run `git log` to see a history of the commits on your current branch. Above each commit there will be the commit hash - essentailly a hexidecimal ID number that identifies the commit. For example: `ebf6d26bad46d57e6468f52548b83e2d6c8badc3`.
+1. Use the arrow keys to move down through the history until you find the commit you want to branch from. Copy the hash (remembering that ctrl-C will likely not work on Windows)
+1. Press `q` to exit git log.
+1. To make the new branch and switch to it, run `git switch -c NEW_BRANCH_NAME COMMIT_HASH` (replacing the name and hash as appropriate and remembering that ctrl-v likely will not work on Windows). The `-c` stands for "commit". 
+1. You are now on the new branch! Run `git push origin BRANCH_NAME` to push the branch.

@@ -111,6 +111,9 @@ Answer the following questions. Consider using online searches or AI for help, b
 ### Updating from upstream
 Follow the instructions in the [Git Branching Cheatsheet](./gitBranchingCheatsheet.md) to update from the upstream. Then, ENSURE YOU ARE BACK ON A BRANCH OTHER THAN MAIN TO CONTINUE WORK. Following these instructions will pull in the new updates from your classmates to the game. In the future, always do this before starting work so that you will stay up-to-date and lessen the chance of merge conflicts.
 
+### Making a new branch
+Make a NEW branch to continue your work from. Branch off of the exisiting branch you created for waves 0-3.
+
 ### Creating a game header
 In this section we will be making a header file that holds the class declaration for your game. I STRONGLY recommend looking at ```include/mj/mj_game.h``` for reference and ```include/aub/aub_test_game.h``` for an example.
 1. In the `include/xxx` directory (where xxx is your 3 letter identifier) make a file ```xxx_game_name.h``` (where xxx and game_name are replaced with your identifier and what you want to call the game).
@@ -198,7 +201,7 @@ Once you have a prototype ready for review, make a PR from your branch. Make a N
 In this wave you will implement the rest of the gameplay functionality and handle difficulty. You do not yet need to have the graphics/sound perfect, but the gameplay will have all of the game mechanics you need implemented.
 
 ### Pre-reqs
-If you have feedback on a PR, PLEASE RESOLVE THOSE ISSUES BEFORE WORKING ON NEW FUNCTIONALITY.
+If you have feedback on a PR, PLEASE RESOLVE THOSE ISSUES BEFORE WORKING ON NEW FUNCTIONALITY. Make a NEW BRANCH to continue your work.
 
 #### Resolving issues
 
