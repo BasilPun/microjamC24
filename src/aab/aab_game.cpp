@@ -32,13 +32,12 @@ namespace aab
      * @param completed_games how many microgames the player has completed so far
      * @param data shared information, such as a rng and number of frames left in the microgame
      */
-    aab_game::aab_game([[maybe_unused]] int completed_games, [[maybe_unused]] const mj::game_data &data) :
-     mj::game("aab"), 
-     dolphin(Dolphin({-100, -20}, 0.6)), // dolphin racing right ward
-     swimmer(Swimmer({-120, 30})), 
-     obstacle(Obstacle({0, 35})),
-     background(bn::regular_bg_items::oceanbg.create_bg()),
-     slow_timer(0)
+    aab_game::aab_game([[maybe_unused]] int completed_games, [[maybe_unused]] const mj::game_data &data) : mj::game("aab"),
+                                                                                                           dolphin(Dolphin({-100, -20})), // dolphin racing right ward
+                                                                                                           swimmer(Swimmer({-120, 30})),
+                                                                                                           obstacle(Obstacle({0, 35})),
+                                                                                                           background(bn::regular_bg_items::oceanbg.create_bg()),
+                                                                                                           slow_timer(0)
     {
         // play_sound(bn::sound_items::aub_tower, completed_games, data);
     }
@@ -89,24 +88,24 @@ namespace aab
         // updating camera
         camera.set_position(swimmer.sprite.x(), 0);
 
-        //Simple Obstacle Collion Check
-        if(slow_timer == 0 &&
+        // Simple Obstacle Collion Check
+        if (slow_timer == 0 &&
             swimmer.sprite.x() > obstacle.sprite.x() - 12 && swimmer.sprite.x() < obstacle.sprite.x() + 12 &&
             swimmer.sprite.y() > obstacle.sprite.y() - 12 && swimmer.sprite.y() < obstacle.sprite.y() + 12)
         {
-            //Knock back swimmer slightly if they hit an obstacle
+            // Knock back swimmer slightly if they hit an obstacle
             swimmer.sprite.set_x(obstacle.sprite.x() - 16);
 
-            //trigger slow effect for 45 frames (0.75 secs),overpowering the boost button
+            // trigger slow effect for 45 frames (0.75 secs),overpowering the boost button
             slow_timer = 45;
         }
 
-        //apply slow-down drag if timer is active
-        if(slow_timer > 0)
+        // apply slow-down drag if timer is active
+        if (slow_timer > 0)
         {
             slow_timer--;
-            
-            //counter forward movement so swimmer crawls forward even if boosting
+
+            // counter forward movement so swimmer crawls forward even if boosting
             swimmer.sprite.set_x(swimmer.sprite.x() - 0.7);
         }
         // Creates a game result indicating whether the game is finished and whether the title should be hidden early

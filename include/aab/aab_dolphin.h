@@ -11,14 +11,14 @@ namespace aab
     {
     public:
         bn::sprite_ptr sprite;
-        Dolphin(bn::fixed_point starting_position, bn::fixed speed);
+        Dolphin(bn::fixed_point starting_position);
 
         void update();
-        void update_position(bn::fixed speed);
+        void update_position(bn::fixed dolphin_speed);
 
     private:
         // bn::sprite_ptr sprite;
         bn::sprite_animate_action<6> animate;
-        bn::fixed speed;
+        bn::fixed speed = 0.5;
     };
 }
