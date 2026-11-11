@@ -9,24 +9,23 @@
 namespace mj
 {
 
-class title_backdrop_1 final : public title_backdrop
-{
+    class title_backdrop_1 final : public title_backdrop
+    {
 
-public:
-    title_backdrop_1();
+    public:
+        title_backdrop_1();
 
-    ~title_backdrop_1() final;
+        ~title_backdrop_1() final;
 
-    [[nodiscard]] bn::optional<bn::fixed> update() final;
+        [[nodiscard]] bn::optional<bn::fixed> update() final;
 
-private:
-    bn::regular_bg_ptr _bg_1;
-    bn::regular_bg_ptr _bg_2;
-    int _counter = 0;
-    bn::camera_ptr _camera;
+    private:
+        bn::regular_bg_ptr _bg_1;
+        int _counter = 0;
+        bn::camera_ptr _camera;
 
-    void _update_bgs();
-};
+        void _update_bgs();
+    };
 
 }
 
