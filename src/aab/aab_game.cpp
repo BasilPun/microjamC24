@@ -32,7 +32,13 @@ namespace aab
      * @param completed_games how many microgames the player has completed so far
      * @param data shared information, such as a rng and number of frames left in the microgame
      */
-    aab_game::aab_game([[maybe_unused]] int completed_games, [[maybe_unused]] const mj::game_data &data) : mj::game("aab"), dolphin(Dolphin({-120, 0}, 0.5)), swimmer(Swimmer({-120, 40})), background(bn::regular_bg_items::oceanbg.create_bg())
+    aab_game::aab_game([[maybe_unused]] int completed_games, [[maybe_unused]] const mj::game_data &data) :
+     mj::game("aab"), 
+     dolphin(Dolphin({-120, -20}, 0.7)), // dolphin racing right ward
+     swimmer(Swimmer({-120, 30})), 
+     obstacle(Obstacle({0,35})),
+     background(bn::regular_bg_items::oceanbg.create_bg()),
+     has_won(false)
     {
         // play_sound(bn::sound_items::aub_tower, completed_games, data);
     }
@@ -54,7 +60,7 @@ namespace aab
      */
     int aab_game::total_frames() const
     {
-        return 600; // 300 frames at 60fps = 5 seconds
+        return 300; // 300 frames at 60fps = 5 seconds
     }
 
     /**
@@ -73,14 +79,28 @@ namespace aab
         bn::camera_ptr camera = bn::camera_ptr::create(0, 0);
         swimmer.sprite.set_camera(camera);
         background.set_camera(camera);
+        obstacle.sprite.set_camera(camera);
 
         // add in dolphin
         dolphin.update();
         swimmer.update();
+        obstacle.update();
 
         // updating camera
         camera.set_position(swimmer.sprite.x(), 0);
 
+        //Simple Obstacle Collion Check
+        if(swimmer.sprite.x() > 20 && swimmer.sprite.x() < 40 && swimmer.sprite.y() > 20 && swimmer.sprite.y() < 45)
+        {
+            //Knock back swimmer slightly if they hit an obstacle
+            swimmer.sprite.set_x(swimmer.sprite.x() - 3);
+        }
+
+        //Finish line at the right edge of the screen 
+        if(swimmer.sprite.x() >= 120)
+        {
+            has_won = true;
+        }
         // Creates a game result indicating whether the game is finished and whether the title should be hidden early
         // For this game the game should end early if the player has won (if victory returns true)
         // The title is not hidden early (false is passed), so the title disappears at the default time

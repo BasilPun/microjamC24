@@ -5,6 +5,7 @@
 #include "mj/mj_game.h"
 #include "aab/aab_dolphin.h"
 #include "aab/aab_swimmer.h"
+#include "aab/aab_obstacle.h"
 
 namespace aab
 {
@@ -69,6 +70,8 @@ namespace aab
     private:
         Dolphin dolphin;
         Swimmer swimmer;
+        Obstacle obstacle;
         bn::regular_bg_ptr background;
+        bool has_won;
     };
 }
