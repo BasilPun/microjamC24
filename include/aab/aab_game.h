@@ -72,6 +72,6 @@ namespace aab
         Swimmer swimmer;
         Obstacle obstacle;
         bn::regular_bg_ptr background;
-        bool has_won;
+        int slow_timer;
     };
 }

@@ -34,11 +34,11 @@ namespace aab
      */
     aab_game::aab_game([[maybe_unused]] int completed_games, [[maybe_unused]] const mj::game_data &data) :
      mj::game("aab"), 
-     dolphin(Dolphin({-120, -20}, 0.7)), // dolphin racing right ward
+     dolphin(Dolphin({-100, -20}, 0.6)), // dolphin racing right ward
      swimmer(Swimmer({-120, 30})), 
-     obstacle(Obstacle({0,35})),
+     obstacle(Obstacle({0, 35})),
      background(bn::regular_bg_items::oceanbg.create_bg()),
-     has_won(false)
+     slow_timer(0)
     {
         // play_sound(bn::sound_items::aub_tower, completed_games, data);
     }
@@ -90,16 +90,24 @@ namespace aab
         camera.set_position(swimmer.sprite.x(), 0);
 
         //Simple Obstacle Collion Check
-        if(swimmer.sprite.x() > 20 && swimmer.sprite.x() < 40 && swimmer.sprite.y() > 20 && swimmer.sprite.y() < 45)
+        if(slow_timer == 0 &&
+            swimmer.sprite.x() > obstacle.sprite.x() - 12 && swimmer.sprite.x() < obstacle.sprite.x() + 12 &&
+            swimmer.sprite.y() > obstacle.sprite.y() - 12 && swimmer.sprite.y() < obstacle.sprite.y() + 12)
         {
             //Knock back swimmer slightly if they hit an obstacle
-            swimmer.sprite.set_x(swimmer.sprite.x() - 3);
+            swimmer.sprite.set_x(obstacle.sprite.x() - 16);
+
+            //trigger slow effect for 45 frames (0.75 secs),overpowering the boost button
+            slow_timer = 45;
         }
 
-        //Finish line at the right edge of the screen 
-        if(swimmer.sprite.x() >= 120)
+        //apply slow-down drag if timer is active
+        if(slow_timer > 0)
         {
-            has_won = true;
+            slow_timer--;
+            
+            //counter forward movement so swimmer crawls forward even if boosting
+            swimmer.sprite.set_x(swimmer.sprite.x() - 0.7);
         }
         // Creates a game result indicating whether the game is finished and whether the title should be hidden early
         // For this game the game should end early if the player has won (if victory returns true)
@@ -115,7 +123,7 @@ namespace aab
      */
     bool aab_game::victory() const
     {
-        return false;
+        return swimmer.sprite.x() > dolphin.sprite.x() && (swimmer.sprite.x() > 0);
     }
 
     /**

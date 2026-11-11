@@ -40,7 +40,7 @@ namespace aab
         {
             sprite.set_y(60);
         }
-        
+
         animate.update();
     }
 }
