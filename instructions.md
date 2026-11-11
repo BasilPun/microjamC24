@@ -134,7 +134,7 @@ In this section we will be making a header file that holds the class declaration
 ### Creating a dummy implementation
 In this section we will make a dummy implementation of your game. We will make sure everything is set up properly before implementing the actual game logic. I STRONGLY recommend looking at ```src/aub/aub_test_game.cpp``` for an example.
 
-1. Create a `src/xxx/xxx_game_name.cpp` file.
+1. Create a `src/xxx/xxx_game_name.cpp` file. For any file you create going forward, please have it start with your 3 letter prefix and an underscore, e.g. `xxx_`.
 1. Include your header you created.
 1. Make a namespace `xxx`.
 1. Create an implementation for your constructor. You can leave the body of the constructor empty, but you MUST call the superclass constructor (`mj::game`) as the first item in your initializer list. Call the superclass constructor with your 3 letter id: `mj::game("xxx")`. You can see `src/aub/aub_test_game.cpp` for an example.
