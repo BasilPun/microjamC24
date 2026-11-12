@@ -70,7 +70,8 @@ namespace aab
     private:
         Dolphin dolphin;
         Swimmer swimmer;
-        Obstacle obstacle;
+        Obstacle log_obstacle;
+        Obstacle rock_obstacle;
         bn::regular_bg_ptr background;
         int slow_timer;
     };

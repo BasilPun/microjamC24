@@ -28,7 +28,7 @@ namespace aab
         // A button gives a speed boost to help race forward
         if(bn::keypad::a_held()|| bn::keypad::a_pressed())
         {
-            sprite.set_x(sprite.x() + 1.0);
+            sprite.set_x(sprite.x() + 0.6);
         }
 
         //Bounding box / lane restriction to keep swimmer out of dolphin's lane
