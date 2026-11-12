@@ -13,16 +13,17 @@
 // Tutor debug
 #include "bn_sprite_items_mj_small_astro.h"
 
-namespace mj {
+namespace mj
+{
 
-chooser_scene::chooser_scene(core& core) :
-    game_chosen(false),
-    _core(core),
-    _cursor_idx(_core.sram_data().chosen_game()),
-    _cursor(bn::sprite_items::mj_small_astro.create_sprite(12)) {
+    chooser_scene::chooser_scene(core &core) : game_chosen(false),
+                                               _core(core),
+                                               _cursor_idx(_core.sram_data().chosen_game()),
+                                               _cursor(bn::sprite_items::mj_small_astro.create_sprite(12))
+    {
         bn::backdrop::set_color(bn::color(0, 0, 0));
 
-        auto& text_generator = core.small_text_generator();
+        auto &text_generator = core.small_text_generator();
 
         game_data fake_game_data = {
             core.text_generator(),
@@ -41,13 +42,15 @@ chooser_scene::chooser_scene(core& core) :
 
         // If we have an old save file and games have been removed so our saved idx is invalid,
         // default to all games
-        if(_cursor_idx >= game_list_entries.size()) {
+        if (_cursor_idx >= game_list_entries.size())
+        {
             _cursor_idx = -1;
         }
 
         update_cursor_position();
 
-        for(int i = 0; i < game_list_entries.size(); i++) {
+        for (int i = 0; i < game_list_entries.size(); i++)
+        {
             game_list::function_type game_list_entry = game_list_entries[i];
             game.reset(game_list_entry(0, fake_game_data));
             auto title = game->title();
@@ -58,64 +61,81 @@ chooser_scene::chooser_scene(core& core) :
         game.reset();
     }
 
-[[nodiscard]] bn::optional<scene_type> chooser_scene::update() {
-    bn::optional<scene_type> next_scene = {};
+    [[nodiscard]] bn::optional<scene_type> chooser_scene::update()
+    {
+        bn::optional<scene_type> next_scene = {};
 
-    if(bn::keypad::down_pressed()) {
-        _cursor_idx += 1;
-        if(_cursor_idx >= _game_names.size()) {
-            _cursor_idx = -1;
+        if (bn::keypad::down_pressed())
+        {
+            _cursor_idx += 1;
+            if (_cursor_idx >= _game_names.size())
+            {
+                _cursor_idx = -1;
+            }
         }
-    }
-    if(bn::keypad::up_pressed()) {
-        _cursor_idx -= 1;
-        if(_cursor_idx < -1) {
-            _cursor_idx = _game_names.size() - 1;
+        if (bn::keypad::up_pressed())
+        {
+            _cursor_idx -= 1;
+            if (_cursor_idx < -1)
+            {
+                _cursor_idx = _game_names.size() - 1;
+            }
         }
+
+        update_cursor_position();
+
+        if (bn::keypad::a_pressed() && !game_chosen)
+        {
+            // show difficulties
+
+            // for each text sprite under chosen game, increase their
+            // y val by 3 line heights and insert: easy, med, hard text
+            // cursor index could be a good help here
+            auto &text_generator = _core.small_text_generator();
+            bn::fixed current_y_height = _cursor.y();
+            for (bn::sprite_ptr &sprite : _game_name_sprites)
+            {
+
+                if (current_y_height < sprite.y())
+                {
+                    sprite.set_y(sprite.y() + LINE_HEIGHT * 4);
+                }
+            }
+            current_y_height += LINE_HEIGHT;
+            text_generator.generate({X_START, current_y_height}, "Easy", _game_difficulty_sprites);
+            current_y_height += LINE_HEIGHT;
+            text_generator.generate({X_START, current_y_height}, "Medium", _game_difficulty_sprites);
+            current_y_height += LINE_HEIGHT;
+            text_generator.generate({X_START, current_y_height}, "Hard", _game_difficulty_sprites);
+        }
+
+        if (bn::keypad::a_pressed() && game_chosen)
+        {
+            // will start the game. ADD INPUT FOR DIFFICULTY
+            auto &sram_data = _core.sram_data();
+            sram_data.set_chosen_game(_cursor_idx);
+            sram_data.write();
+            _core.set_chosen_game(_cursor_idx);
+            next_scene.emplace(mj::scene_type::GAME);
+        }
+
+        if (bn::keypad::b_pressed() && !game_chosen)
+        {
+            next_scene.emplace(mj::scene_type::TITLE);
+        }
+
+        if (bn::keypad::b_pressed() && game_chosen)
+        {
+            // get back from locked difficulty selecrtion
+        }
+
+        return next_scene;
     }
 
-    update_cursor_position();
-
-    if(bn::keypad::a_pressed() && !game_chosen) {
-        //show difficulties
-
-        //for each text sprite under chosen game, increase their 
-        //y val by 3 line heights and insert: easy, med, hard text
-        //cursor index could be a good help here
-
-
-        // text_generator.generate({X_START, y}, "Easy", _game_name_sprites);
-        // y += LINE_HEIGHT;
-        // text_generator.generate({X_START, y}, "Medium", _game_name_sprites);
-        // y += LINE_HEIGHT;
-        // text_generator.generate({X_START, y}, "Hard", _game_name_sprites);
-        // y += LINE_HEIGHT;
+    void chooser_scene::update_cursor_position()
+    {
+        _cursor.set_x(X_START + CURSOR_OFFSET);
+        _cursor.set_y(Y_START + ((_cursor_idx + 1) * LINE_HEIGHT));
     }
-
-    if(bn::keypad::a_pressed() && game_chosen) {
-        //will start the game. ADD INPUT FOR DIFFICULTY
-        auto& sram_data = _core.sram_data();
-        sram_data.set_chosen_game(_cursor_idx);
-        sram_data.write();
-        _core.set_chosen_game(_cursor_idx);
-        next_scene.emplace(mj::scene_type::GAME);
-    }
-
-    if(bn::keypad::b_pressed() && !game_chosen) {
-        next_scene.emplace(mj::scene_type::TITLE);
-    }
-
-    if(bn::keypad::b_pressed() && game_chosen) {
-        //get back from locked difficulty selecrtion
-    }
-
-    return next_scene;
-}
-
-void chooser_scene::update_cursor_position() {
-    _cursor.set_x(X_START + CURSOR_OFFSET);
-    _cursor.set_y(Y_START + ((_cursor_idx + 1) * LINE_HEIGHT));
-}
-
 
 }
