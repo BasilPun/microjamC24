@@ -75,15 +75,31 @@ chooser_scene::chooser_scene(core& core) :
 
     update_cursor_position();
 
-    if(bn::keypad::a_pressed()) {
+    if(bn::keypad::a_pressed() && !game_chosen) {
+        //show difficulties
+        text_generator.generate({X_START, y}, "Easy", _game_name_sprites);
+        y += LINE_HEIGHT;
+        text_generator.generate({X_START, y}, "Medium", _game_name_sprites);
+        y += LINE_HEIGHT;
+        text_generator.generate({X_START, y}, "Hard", _game_name_sprites);
+        y += LINE_HEIGHT;
+    }
+
+    if(bn::keypad::a_pressed() && game_chosen) {
+        //will start the game. ADD INPUT FOR DIFFICULTY
         auto& sram_data = _core.sram_data();
         sram_data.set_chosen_game(_cursor_idx);
         sram_data.write();
         _core.set_chosen_game(_cursor_idx);
         next_scene.emplace(mj::scene_type::GAME);
     }
-    else if(bn::keypad::b_pressed()) {
+
+    if(bn::keypad::b_pressed() && !game_chosen) {
         next_scene.emplace(mj::scene_type::TITLE);
+    }
+
+    if(bn::keypad::b_pressed() && game_chosen) {
+        //get back from locked difficulty selecrtion
     }
 
     return next_scene;
