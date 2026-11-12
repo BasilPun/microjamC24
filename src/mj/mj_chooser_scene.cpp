@@ -16,6 +16,7 @@
 namespace mj {
 
 chooser_scene::chooser_scene(core& core) :
+    game_chosen(false),
     _core(core),
     _cursor_idx(_core.sram_data().chosen_game()),
     _cursor(bn::sprite_items::mj_small_astro.create_sprite(12)) {
@@ -77,12 +78,18 @@ chooser_scene::chooser_scene(core& core) :
 
     if(bn::keypad::a_pressed() && !game_chosen) {
         //show difficulties
-        text_generator.generate({X_START, y}, "Easy", _game_name_sprites);
-        y += LINE_HEIGHT;
-        text_generator.generate({X_START, y}, "Medium", _game_name_sprites);
-        y += LINE_HEIGHT;
-        text_generator.generate({X_START, y}, "Hard", _game_name_sprites);
-        y += LINE_HEIGHT;
+
+        //for each text sprite under chosen game, increase their 
+        //y val by 3 line heights and insert: easy, med, hard text
+        //cursor index could be a good help here
+
+
+        // text_generator.generate({X_START, y}, "Easy", _game_name_sprites);
+        // y += LINE_HEIGHT;
+        // text_generator.generate({X_START, y}, "Medium", _game_name_sprites);
+        // y += LINE_HEIGHT;
+        // text_generator.generate({X_START, y}, "Hard", _game_name_sprites);
+        // y += LINE_HEIGHT;
     }
 
     if(bn::keypad::a_pressed() && game_chosen) {
