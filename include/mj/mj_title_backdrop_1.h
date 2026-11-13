@@ -21,7 +21,6 @@ public:
 
 private:
     bn::regular_bg_ptr _bg_1;
-    bn::regular_bg_ptr _bg_2;
     int _counter = 0;
     bn::camera_ptr _camera;
 
