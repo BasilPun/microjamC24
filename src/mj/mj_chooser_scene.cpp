@@ -16,6 +16,7 @@
 namespace mj {
 
 chooser_scene::chooser_scene(core& core) :
+    game_chosen(false),
     _core(core),
     _cursor_idx(_core.sram_data().chosen_game()),
     _cursor(bn::sprite_items::mj_small_astro.create_sprite(12)) {
@@ -75,15 +76,42 @@ chooser_scene::chooser_scene(core& core) :
 
     update_cursor_position();
 
-    if(bn::keypad::a_pressed()) {
+    if(bn::keypad::a_pressed() && !game_chosen) {
+        // show difficulties
+
+        // for each text sprite under chosen game, increase their
+        // y val by 3 line heights and insert: easy, med, hard text
+        // cursor index could be a good help here
+        auto& text_generator = _core.small_text_generator();
+        bn::fixed current_y_height = _cursor.y();
+        for(bn::sprite_ptr& sprite : _game_name_sprites) {
+            if(current_y_height < sprite.y()) {
+                sprite.set_y(sprite.y() + LINE_HEIGHT * 4);
+            }
+        }
+        current_y_height += LINE_HEIGHT;
+        text_generator.generate({X_START, current_y_height}, "Easy", _game_difficulty_sprites);
+        current_y_height += LINE_HEIGHT;
+        text_generator.generate({X_START, current_y_height}, "Medium", _game_difficulty_sprites);
+        current_y_height += LINE_HEIGHT;
+        text_generator.generate({X_START, current_y_height}, "Hard", _game_difficulty_sprites);
+    }
+
+    if(bn::keypad::a_pressed() && game_chosen) {
+        // will start the game. ADD INPUT FOR DIFFICULTY
         auto& sram_data = _core.sram_data();
         sram_data.set_chosen_game(_cursor_idx);
         sram_data.write();
         _core.set_chosen_game(_cursor_idx);
         next_scene.emplace(mj::scene_type::GAME);
     }
-    else if(bn::keypad::b_pressed()) {
+
+    if(bn::keypad::b_pressed() && !game_chosen) {
         next_scene.emplace(mj::scene_type::TITLE);
+    }
+
+    if(bn::keypad::b_pressed() && game_chosen) {
+        // get back from locked difficulty selecrtion
     }
 
     return next_scene;
@@ -93,6 +121,5 @@ void chooser_scene::update_cursor_position() {
     _cursor.set_x(X_START + CURSOR_OFFSET);
     _cursor.set_y(Y_START + ((_cursor_idx + 1) * LINE_HEIGHT));
 }
-
 
 }
