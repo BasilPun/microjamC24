@@ -81,7 +81,7 @@ bool credits::update()
 
 void credits::_generate_text_items()
 {
-    _text_items.push_back("Green River College C23 Microjam");
+    _text_items.push_back("Green River College C24 Microjam");
     _text_items.push_back("");
     _text_items.push_back("");
     _text_items.push_back("");
