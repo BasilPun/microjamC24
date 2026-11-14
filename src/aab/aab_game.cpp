@@ -1,9 +1,9 @@
 #include "aab_game.h"
 
 #include "mj/mj_game_list.h"
-#include "bn_regular_bg_items_oceanbg.h"
-#include "bn_sprite_items_log.h"
-#include "bn_sprite_items_rock.h"
+#include "bn_regular_bg_items_aab_oceanbg.h"
+#include "bn_sprite_items_aab_log.h"
+#include "bn_sprite_items_aab_rock.h"
 
 #include "bn_camera_ptr.h"
 
@@ -37,9 +37,9 @@ namespace aab
     aab_game::aab_game([[maybe_unused]] int completed_games, [[maybe_unused]] const mj::game_data &data) : mj::game("aab"),
                                                                                                            dolphin(Dolphin({-100, -20})), // dolphin racing right ward
                                                                                                            swimmer(Swimmer({-120, 30})),
-                                                                                                           log_obstacle(Obstacle(bn::sprite_items::log,{10,35})),
-                                                                                                           rock_obstacle(Obstacle(bn::sprite_items::rock,{70,25})),
-                                                                                                           background(bn::regular_bg_items::oceanbg.create_bg()),
+                                                                                                           log_obstacle(Obstacle(bn::sprite_items::aab_log,{10,35})),
+                                                                                                           rock_obstacle(Obstacle(bn::sprite_items::aab_rock,{70,25})),
+                                                                                                           background(bn::regular_bg_items::aab_oceanbg.create_bg()),
                                                                                                            slow_timer(0)
     {
         // play_sound(bn::sound_items::aub_tower, completed_games, data);
