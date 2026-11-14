@@ -45,7 +45,7 @@ chooser_scene::chooser_scene(core& core) :
             _cursor_idx = -1;
         }
 
-        update_cursor_position();
+        update_cursor_position(game_chosen);
 
         for(int i = 0; i < game_list_entries.size(); i++) {
             game_list::function_type game_list_entry = game_list_entries[i];
@@ -61,22 +61,36 @@ chooser_scene::chooser_scene(core& core) :
 [[nodiscard]] bn::optional<scene_type> chooser_scene::update() {
     bn::optional<scene_type> next_scene = {};
 
-    if(bn::keypad::down_pressed()) {
+    if(bn::keypad::down_pressed() && !game_chosen) {
         _cursor_idx += 1;
         if(_cursor_idx >= _game_names.size()) {
             _cursor_idx = -1;
         }
     }
-    if(bn::keypad::up_pressed()) {
+    if(bn::keypad::up_pressed() && !game_chosen) {
         _cursor_idx -= 1;
         if(_cursor_idx < -1) {
             _cursor_idx = _game_names.size() - 1;
         }
     }
 
-    update_cursor_position();
+    if(bn::keypad::down_pressed() && game_chosen) {
+        _cursor_idx += 1;
+        //stay between chosen game's (index + 1) - (index + 3) -> easy, medium, hard
+        if(_cursor_idx > (game_chosen_index+3)) {
+            _cursor_idx = (game_chosen_index+1);
+        }
+    }
+
+    if(bn::keypad::up_pressed() && game_chosen) {
+        _cursor_idx -= 1;
+        if(_cursor_idx < (game_chosen_index+1)) {
+            _cursor_idx = (game_chosen_index+3);
+        }
+    }
 
     if(bn::keypad::a_pressed() && !game_chosen) {
+        game_chosen = true;
         // show difficulties
 
         // for each text sprite under chosen game, increase their
@@ -89,15 +103,21 @@ chooser_scene::chooser_scene(core& core) :
                 sprite.set_y(sprite.y() + LINE_HEIGHT * 4);
             }
         }
+        game_chosen_index = _cursor_idx;
+
+        //spawn difficulty text
         current_y_height += LINE_HEIGHT;
-        text_generator.generate({X_START, current_y_height}, "Easy", _game_difficulty_sprites);
+        text_generator.generate({X_START + x_tab, current_y_height}, "Easy", _game_difficulty_sprites);
         current_y_height += LINE_HEIGHT;
-        text_generator.generate({X_START, current_y_height}, "Medium", _game_difficulty_sprites);
+        text_generator.generate({X_START + x_tab, current_y_height}, "Medium", _game_difficulty_sprites);
         current_y_height += LINE_HEIGHT;
-        text_generator.generate({X_START, current_y_height}, "Hard", _game_difficulty_sprites);
+        text_generator.generate({X_START + x_tab, current_y_height}, "Hard", _game_difficulty_sprites);
+        
+        //tab into difficulties
+        _cursor_idx++;
     }
 
-    if(bn::keypad::a_pressed() && game_chosen) {
+    if(bn::keypad::a_pressed() && false) {
         // will start the game. ADD INPUT FOR DIFFICULTY
         auto& sram_data = _core.sram_data();
         sram_data.set_chosen_game(_cursor_idx);
@@ -114,12 +134,20 @@ chooser_scene::chooser_scene(core& core) :
         // get back from locked difficulty selecrtion
     }
 
+    update_cursor_position(game_chosen);
+
     return next_scene;
 }
 
-void chooser_scene::update_cursor_position() {
-    _cursor.set_x(X_START + CURSOR_OFFSET);
-    _cursor.set_y(Y_START + ((_cursor_idx + 1) * LINE_HEIGHT));
+void chooser_scene::update_cursor_position(bool _game_chosen) {
+    if (!_game_chosen){
+        _cursor.set_x(X_START + CURSOR_OFFSET);
+        _cursor.set_y(Y_START + ((_cursor_idx + 1) * LINE_HEIGHT));
+    }
+    else{
+        _cursor.set_x(X_START + CURSOR_OFFSET + x_tab);
+        _cursor.set_y(Y_START + ((_cursor_idx + 1) * LINE_HEIGHT));
+    }
 }
 
 }
