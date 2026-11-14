@@ -28,7 +28,7 @@ private:
     bn::sprite_ptr _cursor;
     bn::vector<bn::sprite_ptr, 16*64> _game_name_sprites;
     bn::vector<bn::string<16>, 64> _game_names;
-    bn::vector<bn::sprite_ptr, 16*64> _game_difficulty_sprites;
+    bn::vector<bn::sprite_ptr, 16> _game_difficulty_sprites;
 
     void update_cursor_position(bool _game_chosen);
 
