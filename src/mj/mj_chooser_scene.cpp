@@ -100,7 +100,7 @@ chooser_scene::chooser_scene(core& core) :
         bn::fixed current_y_height = _cursor.y();
         for(bn::sprite_ptr& sprite : _game_name_sprites) {
             if(current_y_height < sprite.y()) {
-                sprite.set_y(sprite.y() + LINE_HEIGHT * 4);
+                sprite.set_y(sprite.y() + LINE_HEIGHT * 3);
             }
         }
         game_chosen_index = _cursor_idx;
@@ -143,7 +143,7 @@ chooser_scene::chooser_scene(core& core) :
         bn::fixed current_y_height = _cursor.y();
         for(bn::sprite_ptr& sprite : _game_name_sprites) {
             if(current_y_height < sprite.y()) {
-                sprite.set_y(sprite.y() - LINE_HEIGHT * 4);
+                sprite.set_y(sprite.y() - LINE_HEIGHT * 3);
             }
         }
     }
