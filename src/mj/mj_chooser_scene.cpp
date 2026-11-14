@@ -118,10 +118,18 @@ chooser_scene::chooser_scene(core& core) :
     }
     else if(bn::keypad::a_pressed() && game_chosen) {
         // will start the game. ADD INPUT FOR DIFFICULTY
+        //difficulty chosen can be got by seeing amount of cursor index increases since game_chosen_index
+        int difficulty_level_chosen = _cursor_idx - game_chosen_index;
+
+        //sram seems to contain data about the microjam itself
         auto& sram_data = _core.sram_data();
         sram_data.set_chosen_game(game_chosen_index);
         sram_data.write();
+
+        //so here might be where i want to look into
         _core.set_chosen_game(game_chosen_index);
+
+        //scene isn't probably where it'd be
         next_scene.emplace(mj::scene_type::GAME);
     }
 
