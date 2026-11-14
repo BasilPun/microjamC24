@@ -32,10 +32,12 @@ private:
 
     void update_cursor_position(bool _game_chosen);
 
-    static constexpr int CURSOR_OFFSET = -6;
+    static constexpr int CURSOR_OFFSET = -14;
     static constexpr int X_START = -90;
     static constexpr int Y_START = -70;
     static constexpr int LINE_HEIGHT = 10;
+
+    //x_tab represents tabbed in x offset
     static constexpr int x_tab = 30;
 };
 
