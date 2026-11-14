@@ -7,6 +7,8 @@
 #include "aab/aab_swimmer.h"
 #include "aab/aab_obstacle.h"
 
+#include "bn_camera_ptr.h"
+
 namespace aab
 {
     class aab_game : public mj::game
@@ -73,6 +75,7 @@ namespace aab
         Obstacle log_obstacle;
         Obstacle rock_obstacle;
         bn::regular_bg_ptr background;
+        bn::camera_ptr camera;
         int slow_timer;
     };
 }

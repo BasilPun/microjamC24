@@ -5,8 +5,6 @@
 #include "bn_sprite_items_aab_log.h"
 #include "bn_sprite_items_aab_rock.h"
 
-#include "bn_camera_ptr.h"
-
 // String arrays for the credits can go in an anonymous namespace
 namespace
 {
@@ -40,6 +38,7 @@ namespace aab
                                                                                                            log_obstacle(Obstacle(bn::sprite_items::aab_log,{10,35})),
                                                                                                            rock_obstacle(Obstacle(bn::sprite_items::aab_rock,{70,25})),
                                                                                                            background(bn::regular_bg_items::aab_oceanbg.create_bg()),
+                                                                                                           camera(bn::camera_ptr::create(0, 0)),
                                                                                                            slow_timer(0)
     {
         // play_sound(bn::sound_items::aub_tower, completed_games, data);
@@ -77,8 +76,7 @@ namespace aab
      */
     mj::game_result aab_game::play([[maybe_unused]] const mj::game_data &data)
     {
-        // testing camera
-        bn::camera_ptr camera = bn::camera_ptr::create(0, 0);
+        // camera
         swimmer.sprite.set_camera(camera);
         background.set_camera(camera);
         log_obstacle.sprite.set_camera(camera);
