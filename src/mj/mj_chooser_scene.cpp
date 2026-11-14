@@ -116,21 +116,19 @@ chooser_scene::chooser_scene(core& core) :
         //tab into difficulties
         _cursor_idx++;
     }
-
-    if(bn::keypad::a_pressed() && false) {
+    else if(bn::keypad::a_pressed() && game_chosen) {
         // will start the game. ADD INPUT FOR DIFFICULTY
         auto& sram_data = _core.sram_data();
-        sram_data.set_chosen_game(_cursor_idx);
+        sram_data.set_chosen_game(game_chosen_index);
         sram_data.write();
-        _core.set_chosen_game(_cursor_idx);
+        _core.set_chosen_game(game_chosen_index);
         next_scene.emplace(mj::scene_type::GAME);
     }
 
     if(bn::keypad::b_pressed() && !game_chosen) {
         next_scene.emplace(mj::scene_type::TITLE);
     }
-
-    if(bn::keypad::b_pressed() && game_chosen) {
+    else if(bn::keypad::b_pressed() && game_chosen) {
         // get back from locked difficulty selecrtion
         _cursor_idx = game_chosen_index;
         game_chosen = false;
