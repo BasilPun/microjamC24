@@ -132,6 +132,20 @@ chooser_scene::chooser_scene(core& core) :
 
     if(bn::keypad::b_pressed() && game_chosen) {
         // get back from locked difficulty selecrtion
+        _cursor_idx = game_chosen_index;
+        game_chosen = false;
+        update_cursor_position(game_chosen);
+
+        //remove difficulty sprites
+        _game_difficulty_sprites.clear();
+
+        //move sprites back up
+        bn::fixed current_y_height = _cursor.y();
+        for(bn::sprite_ptr& sprite : _game_name_sprites) {
+            if(current_y_height < sprite.y()) {
+                sprite.set_y(sprite.y() - LINE_HEIGHT * 4);
+            }
+        }
     }
 
     update_cursor_position(game_chosen);
