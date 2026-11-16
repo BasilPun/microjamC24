@@ -129,10 +129,10 @@ namespace aab
              // counter forward movement so swimmer crawls forward even if boosting
              swimmer.sprite.set_x(swimmer.sprite.x() - 0.7);
          }
+        }
         // Creates a game result indicating whether the game is finished and whether the title should be hidden early
         mj::game_result result(victory(), false);
         return result;
-        }
     }
 
     /**
