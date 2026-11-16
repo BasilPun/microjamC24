@@ -32,13 +32,13 @@ namespace aab
         }
 
         //Bounding box / lane restriction to keep swimmer out of dolphin's lane
-        if(sprite.y() < 10)
+        if(sprite.y() < swimmer_min_height)
         {
-            sprite.set_y(10);
+            sprite.set_y(swimmer_min_height);
         }
-        if(sprite.y() > 60)
+        if(sprite.y() > swimmer_max_height)
         {
-            sprite.set_y(60);
+            sprite.set_y(swimmer_max_height);
         }
 
         animate.update();

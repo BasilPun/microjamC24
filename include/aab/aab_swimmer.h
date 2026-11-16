@@ -25,5 +25,7 @@ namespace aab
 
     private:
         bn::sprite_animate_action<4> animate;
+        static constexpr int swimmer_min_height = 60;
+        static constexpr int swimmer_max_height = 10;
     };
 }
