@@ -69,11 +69,16 @@ namespace aab
          */
         void fade_out(const mj::game_data &data) override;
 
+
+        //setting amount of obstacles that spawn with difficulty level
+        static int obstacle_amount(mj::difficulty_level difficulty);
+
     private:
         Dolphin dolphin;
         Swimmer swimmer;
-        Obstacle log_obstacle;
-        Obstacle rock_obstacle;
+        Obstacle obstacle;
+        // Obstacle log_obstacle;
+        // Obstacle rock_obstacle;
         bn::regular_bg_ptr background;
         bn::camera_ptr camera;
         int slow_timer;
