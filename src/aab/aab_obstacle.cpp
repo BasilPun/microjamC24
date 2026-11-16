@@ -3,9 +3,9 @@
 
 namespace aab
 {
-    Obstacle::Obstacle(bn::sprite_item log, bn::sprite_item rock, int spawn_amount)
+    Obstacle::Obstacle(bn::sprite_item log, bn::sprite_item rock, int spawn_amount, bn::random random)
     {
-        bn::random random;
+        random.update();
         for(int i =0; i < spawn_amount; i++){
             //random coordinates
             //a) should be within swimmer's bound
@@ -15,12 +15,14 @@ namespace aab
 
             int isLog = random.get_unbiased_int(0,2);
             if(isLog == 1){
-                //spawn log
-                sprites.push_back(log.create_sprite(x, y));
+                bn::sprite_ptr s = log.create_sprite(x, y);
+                s.set_bg_priority(0);
+                sprites.push_back(s);
             }
             else{
-                //spawn rock
-                sprites.push_back(rock.create_sprite(x, y));
+                bn::sprite_ptr s = rock.create_sprite(x, y);
+                s.set_bg_priority(0);
+                sprites.push_back(s);
             }
         }   
     }

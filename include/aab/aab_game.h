@@ -80,8 +80,6 @@ namespace aab
         Dolphin dolphin;
         Swimmer swimmer;
         Obstacle obstacle;
-        // Obstacle log_obstacle;
-        // Obstacle rock_obstacle;
         bn::regular_bg_ptr background;
         bn::camera_ptr camera;
         int slow_timer;

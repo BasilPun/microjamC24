@@ -35,10 +35,7 @@ namespace aab
     aab_game::aab_game([[maybe_unused]] int completed_games, [[maybe_unused]] const mj::game_data &data) : mj::game("aab"),
                                                                                                            dolphin(Dolphin({-100, -20}, recommended_dolphin_speed(recommended_difficulty_level(completed_games, data)))),
                                                                                                            swimmer(Swimmer({-120, 30})),
-                                                                                                           //normal for testing
-                                                                                                           obstacle(bn::sprite_items::aab_log, bn::sprite_items::aab_rock, obstacle_amount(recommended_difficulty_level(completed_games, data))),
-                                                                                                        // log_obstacle(Obstacle(bn::sprite_items::aab_log,{10,35})),
-                                                                                                        // rock_obstacle(Obstacle(bn::sprite_items::aab_rock,{70,25})),
+                                                                                                           obstacle(bn::sprite_items::aab_log, bn::sprite_items::aab_rock, obstacle_amount(recommended_difficulty_level(completed_games, data)), data.random),
                                                                                                            background(bn::regular_bg_items::aab_oceanbg.create_bg()),
                                                                                                            camera(bn::camera_ptr::create(0, 0)),
                                                                                                            slow_timer(0)
@@ -56,7 +53,6 @@ namespace aab
         return "Race the dolphin";
     }
 
-    // NOT WOKRING
     //the more games the player has completed, the more obstacles that will spawn.
     int aab_game::obstacle_amount(mj::difficulty_level difficulty) {
     if(difficulty == mj::difficulty_level::EASY) {
@@ -102,55 +98,41 @@ namespace aab
         dolphin.sprite.set_camera(camera);
         swimmer.sprite.set_camera(camera);
         background.set_camera(camera);
-        // log_obstacle.sprite.set_camera(camera);
-        // rock_obstacle.sprite.set_camera(camera);
 
         for(bn::sprite_ptr& sprite : obstacle.sprites)
         {
             sprite.set_camera(camera);
         }
 
-        // add in dolphin
+        // add in dolphin and swimmer
         dolphin.update();
         swimmer.update();
-        // log_obstacle.update();
-        // rock_obstacle.update();
 
         // updating camera
         camera.set_position(swimmer.sprite.x(), 0);
 
-        // Log Obstacle Collion Check
-        // if (slow_timer == 0 &&
-        //     swimmer.sprite.x() > log_obstacle.sprite.x() - 12 && swimmer.sprite.x() < log_obstacle.sprite.x() + 12 &&
-        //     swimmer.sprite.y() > log_obstacle.sprite.y() - 12 && swimmer.sprite.y() < log_obstacle.sprite.y() + 12)
-        // {
-        //     // Knock back swimmer slightly if they hit an obstacle
-        //     swimmer.sprite.set_x(log_obstacle.sprite.x() - 16);
+        //Obstace collison check(slows down without bounce back)
+        for(bn::sprite_ptr& sprite : obstacle.sprites)
+        {
+         if(slow_timer == 0 &&
+            swimmer.sprite.x() > sprite.x() - 12 && swimmer.sprite.x() < sprite.x() + 12 &&
+            swimmer.sprite.y() > sprite.y() - 12 && swimmer.sprite.y() < sprite.y() + 12)
+         {
+            //trigger slow effect for 45 frames (0.75 secs)
+            slow_timer = 45;
+         }
+        // apply slow-down drag if timer is active
+         if (slow_timer > 0)
+         {
+             slow_timer--;
 
-        //     // trigger slow effect for 45 frames (0.75 secs),overpowering the boost button
-        //     slow_timer = 45;
-        // }
-        // //Rock obstacle collision check
-        // if(slow_timer == 0 &&
-        //    swimmer.sprite.x() > rock_obstacle.sprite.x() - 12 && swimmer.sprite.x() < rock_obstacle.sprite.x() + 12 &&
-        //    swimmer.sprite.y() > rock_obstacle.sprite.y() - 12 && swimmer.sprite.y() < rock_obstacle.sprite.y() + 12)
-        // {
-        //     swimmer.sprite.set_x(rock_obstacle.sprite.x() - 16);
-        //     slow_timer = 45;
-        // }
-        // // apply slow-down drag if timer is active
-        // if (slow_timer > 0)
-        // {
-        //     slow_timer--;
-
-        //     // counter forward movement so swimmer crawls forward even if boosting
-        //     swimmer.sprite.set_x(swimmer.sprite.x() - 0.7);
-        // }
+             // counter forward movement so swimmer crawls forward even if boosting
+             swimmer.sprite.set_x(swimmer.sprite.x() - 0.7);
+         }
         // Creates a game result indicating whether the game is finished and whether the title should be hidden early
-        // For this game the game should end early if the player has won (if victory returns true)
-        // The title is not hidden early (false is passed), so the title disappears at the default time
         mj::game_result result(victory(), false);
         return result;
+        }
     }
 
     /**
