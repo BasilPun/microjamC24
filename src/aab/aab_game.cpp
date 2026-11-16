@@ -61,8 +61,9 @@ namespace aab
     }
 
     //the more games the player has completed, the more obstacles that will spawn.
-    int aab_game::obstacle_amount(mj::difficulty_level difficulty) {
-    if(difficulty == mj::difficulty_level::EASY) {
+    int aab_game::obstacle_amount(mj::difficulty_level difficulty) 
+    {
+        if(difficulty == mj::difficulty_level::EASY) {
         return 1;
     } else if (difficulty == mj::difficulty_level::NORMAL) {
         return 3;
@@ -101,29 +102,26 @@ namespace aab
      */
     mj::game_result aab_game::play([[maybe_unused]] const mj::game_data &data)
     {
-
         // add in dolphin and swimmer
         dolphin.update();
         swimmer.update();
-
         // updating camera
         camera.set_position(swimmer.sprite.x(), 0);
-
         //Obstace collison check(slows down without bounce back)
         for(bn::sprite_ptr& sprite : obstacle.sprites)
         {
-         if(swimmer.sprite.x() > sprite.x() - collison_radius && swimmer.sprite.x() < sprite.x() + collison_radius &&
+            if(swimmer.sprite.x() > sprite.x() - collison_radius && swimmer.sprite.x() < sprite.x() + collison_radius &&
             swimmer.sprite.y() > sprite.y() - collison_radius && swimmer.sprite.y() < sprite.y() + collison_radius)
          {
             //trigger slow effect for 45 frames (0.75 secs)
             swimmer.slow_down();
          }
-
+        }
         // Creates a game result indicating whether the game is finished and whether the title should be hidden early
         mj::game_result result(victory(), false);
         return result;
-        }
     }
+    
 
     /**
      * Returns whether the player has won the microgame.
