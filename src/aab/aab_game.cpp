@@ -128,7 +128,7 @@ namespace aab
     /**
      * Returns whether the player has won the microgame.
      *
-     * In this particular microgame the player wins if they make the ball leave the screen.
+     * In this particular microgame the player wins if they cross the finishing line before the dolphin.
      */
     bool aab_game::victory() const
     {
