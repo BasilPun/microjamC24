@@ -36,7 +36,7 @@ namespace aab
                                                                                                            dolphin(Dolphin({-100, -20}, recommended_dolphin_speed(recommended_difficulty_level(completed_games, data)))),
                                                                                                            swimmer(Swimmer({-120, 30})),
                                                                                                            //normal for testing
-                                                                                                           obstacle(bn::sprite_items::aab_log, bn::sprite_items::aab_rock, obstacle_amount(mj::difficulty_level::NORMAL)),
+                                                                                                           obstacle(bn::sprite_items::aab_log, bn::sprite_items::aab_rock, obstacle_amount(recommended_difficulty_level(completed_games, data))),
                                                                                                         // log_obstacle(Obstacle(bn::sprite_items::aab_log,{10,35})),
                                                                                                         // rock_obstacle(Obstacle(bn::sprite_items::aab_rock,{70,25})),
                                                                                                            background(bn::regular_bg_items::aab_oceanbg.create_bg()),
