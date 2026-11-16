@@ -33,7 +33,7 @@ namespace aab
      * @param data shared information, such as a rng and number of frames left in the microgame
      */
     aab_game::aab_game([[maybe_unused]] int completed_games, [[maybe_unused]] const mj::game_data &data) : mj::game("aab"),
-                                                                                                           dolphin(Dolphin({-100, -20})), // dolphin racing right ward
+                                                                                                           dolphin(Dolphin({-100, -20}, recommended_dolphin_speed(recommended_difficulty_level(completed_games, data)))),
                                                                                                            swimmer(Swimmer({-120, 30})),
                                                                                                            //normal for testing
                                                                                                            obstacle(bn::sprite_items::aab_log, bn::sprite_items::aab_rock, obstacle_amount(mj::difficulty_level::NORMAL)),
@@ -53,9 +53,10 @@ namespace aab
      */
     bn::string<16> aab_game::title() const
     {
-        return "Race the Dolphin";
+        return "Race the dolphin";
     }
 
+    // NOT WOKRING
     //the more games the player has completed, the more obstacles that will spawn.
     int aab_game::obstacle_amount(mj::difficulty_level difficulty) {
     if(difficulty == mj::difficulty_level::EASY) {
@@ -64,6 +65,15 @@ namespace aab
         return 3;
     } 
     return 8;
+    }
+
+    bn::fixed aab_game::recommended_dolphin_speed(mj::difficulty_level difficulty) {
+    if(difficulty == mj::difficulty_level::EASY) {
+        return 0.6;
+    } else if (difficulty == mj::difficulty_level::NORMAL) {
+        return 1;
+    } 
+    return 2;
     }
 
     /**

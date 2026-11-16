@@ -8,10 +8,12 @@ namespace aab
      *
      * @param starting_position the location the dolphin starts at
      */
-    Dolphin::Dolphin(bn::fixed_point starting_position) : 
+    Dolphin::Dolphin(bn::fixed_point starting_position, bn::fixed dolphin_speed) : 
         sprite(bn::sprite_items::aab_dolphin.create_sprite(starting_position)),
-        animate(bn::create_sprite_animate_action_forever(sprite, 10, bn::sprite_items::aab_dolphin.tiles_item(), 0, 1, 2, 3, 4, 5))
+        animate(bn::create_sprite_animate_action_forever(sprite, 10, bn::sprite_items::aab_dolphin.tiles_item(), 0, 1, 2, 3, 4, 5)),
+        speed(dolphin_speed)
     {
+        //set different speeds for easy, medium, hard
     }
 
     void Dolphin::update()
@@ -20,7 +22,7 @@ namespace aab
         animate.update();
 
         //Move forward at a consisten racing speed
-        update_position(0.55);
+        update_position(speed);
     }
 
     void Dolphin::update_position(bn::fixed dolphin_speed)

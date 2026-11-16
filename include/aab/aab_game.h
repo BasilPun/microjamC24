@@ -73,6 +73,9 @@ namespace aab
         //setting amount of obstacles that spawn with difficulty level
         static int obstacle_amount(mj::difficulty_level difficulty);
 
+        //setting dolphin speed level according to difficulty level
+        bn::fixed recommended_dolphin_speed(mj::difficulty_level difficulty);
+
     private:
         Dolphin dolphin;
         Swimmer swimmer;
