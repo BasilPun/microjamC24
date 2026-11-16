@@ -11,24 +11,29 @@ namespace aab
     }
 
     void Swimmer::update()
-    {
-        //continous slow forward movement from left to right
-        sprite.set_x(sprite.x()+0.5);
-
-        //up and down movment via arrow keys
-        if(bn::keypad::up_held())
-        {
-            sprite.set_y(sprite.y() - 1);
+    {   
+        counter ++;
+        //set a buffer for going up/down (retro movement feeling)
+        if (counter > debounce){
+            buffer = false;
+            counter = 0;
         }
-        if(bn::keypad::down_held())
+        // Swimmer only moves forward when a is pressed
+        if(bn::keypad::a_pressed())
         {
-            sprite.set_y(sprite.y() + 1);
+            sprite.set_x(sprite.x() + forward_speed);
         }
-
-        // A button gives a speed boost to help race forward
-        if(bn::keypad::a_held()|| bn::keypad::a_pressed())
+        
+        // up and down movment via arrow keys
+        if(bn::keypad::up_held() && !buffer)
         {
-            sprite.set_x(sprite.x() + 0.6);
+            sprite.set_y(sprite.y() + move_up);
+            buffer = true;
+        }
+        if(bn::keypad::down_held() && !buffer)
+        {
+            sprite.set_y(sprite.y() + move_down);
+            buffer = true;
         }
 
         //Bounding box / lane restriction to keep swimmer out of dolphin's lane

@@ -25,7 +25,14 @@ namespace aab
 
     private:
         bn::sprite_animate_action<4> animate;
-        static constexpr int swimmer_min_height = 60;
-        static constexpr int swimmer_max_height = 10;
+        static constexpr int swimmer_min_height = 10;
+        static constexpr int swimmer_max_height = 60;
+        static constexpr float forward_speed = 10;
+        static constexpr float move_up = -5;
+        static constexpr float move_down = 5;
+        
+        static constexpr int debounce = 20;
+        int counter = 0;
+        bool buffer = false;
     };
 }
