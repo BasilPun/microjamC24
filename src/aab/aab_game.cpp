@@ -37,12 +37,19 @@ namespace aab
                                                                                                            swimmer(Swimmer({-120, 30})),
                                                                                                            obstacle(bn::sprite_items::aab_log, bn::sprite_items::aab_rock, obstacle_amount(recommended_difficulty_level(completed_games, data)), data.random),
                                                                                                            background(bn::regular_bg_items::aab_oceanbg.create_bg()),
-                                                                                                           camera(bn::camera_ptr::create(0, 0)),
-                                                                                                           slow_timer(0)
+                                                                                                           camera(bn::camera_ptr::create(0, 0))
+    
     {
-        // play_sound(bn::sound_items::aub_tower, completed_games, data);
-    }
+        //Attach camera to spites once upon creation
+        dolphin.sprite.set_camera(camera);
+        swimmer.sprite.set_camera(camera);
+        background.set_camera(camera);
 
+        for(bn::sprite_ptr& sprite : obstacle.sprites)
+        {
+            sprite.set_camera(camera);
+        }
+    }
     /**
      * The instructions given to the player at the beginning of the microgame.
      *
@@ -50,7 +57,7 @@ namespace aab
      */
     bn::string<16> aab_game::title() const
     {
-        return "Race the dolphin";
+        return "Mash A to Swim!";
     }
 
     //the more games the player has completed, the more obstacles that will spawn.
@@ -65,11 +72,11 @@ namespace aab
 
     bn::fixed aab_game::recommended_dolphin_speed(mj::difficulty_level difficulty) {
     if(difficulty == mj::difficulty_level::EASY) {
-        return 0.6;
+        return easy_dolphin_speed;
     } else if (difficulty == mj::difficulty_level::NORMAL) {
-        return 1;
+        return normal_dolphin_speed;
     } 
-    return 2;
+    return hard_dolphin_speed;
     }
 
     /**
@@ -94,15 +101,6 @@ namespace aab
      */
     mj::game_result aab_game::play([[maybe_unused]] const mj::game_data &data)
     {
-        // camera
-        dolphin.sprite.set_camera(camera);
-        swimmer.sprite.set_camera(camera);
-        background.set_camera(camera);
-
-        for(bn::sprite_ptr& sprite : obstacle.sprites)
-        {
-            sprite.set_camera(camera);
-        }
 
         // add in dolphin and swimmer
         dolphin.update();
@@ -114,21 +112,13 @@ namespace aab
         //Obstace collison check(slows down without bounce back)
         for(bn::sprite_ptr& sprite : obstacle.sprites)
         {
-         if(slow_timer == 0 &&
-            swimmer.sprite.x() > sprite.x() - 12 && swimmer.sprite.x() < sprite.x() + 12 &&
-            swimmer.sprite.y() > sprite.y() - 12 && swimmer.sprite.y() < sprite.y() + 12)
+         if(swimmer.sprite.x() > sprite.x() - collison_radius && swimmer.sprite.x() < sprite.x() + collison_radius &&
+            swimmer.sprite.y() > sprite.y() - collison_radius && swimmer.sprite.y() < sprite.y() + collison_radius)
          {
             //trigger slow effect for 45 frames (0.75 secs)
-            slow_timer = 45;
+            swimmer.slow_down();
          }
-        // apply slow-down drag if timer is active
-         if (slow_timer > 0)
-         {
-             slow_timer--;
 
-             // counter forward movement so swimmer crawls forward even if boosting
-             swimmer.sprite.set_x(swimmer.sprite.x() - 0.7);
-         }
         // Creates a game result indicating whether the game is finished and whether the title should be hidden early
         mj::game_result result(victory(), false);
         return result;
@@ -142,7 +132,7 @@ namespace aab
      */
     bool aab_game::victory() const
     {
-        return swimmer.sprite.x() > dolphin.sprite.x() && (swimmer.sprite.x() > 150);
+        return swimmer.sprite.x() > dolphin.sprite.x() && (swimmer.sprite.x() > finish_line_x);
     }
 
     /**

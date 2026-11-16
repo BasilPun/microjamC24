@@ -19,9 +19,9 @@ namespace aab
          *
          * @param starting_position the location to start the swimmer at
          */
-
         Swimmer(bn::fixed_point starting_position);
         void update();
+        void slow_down();
 
     private:
         bn::sprite_animate_action<4> animate;
@@ -30,9 +30,12 @@ namespace aab
         static constexpr float forward_speed = 10;
         static constexpr float move_up = -5;
         static constexpr float move_down = 5;
+        static constexpr bn::fixed slow_drag = 0.5;
+        static constexpr int slow_duration = 45;
         
         static constexpr int debounce = 20;
         int counter = 0;
         bool buffer = false;
+        int slow_timer = 0;
     };
 }

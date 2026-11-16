@@ -46,6 +46,21 @@ namespace aab
             sprite.set_y(swimmer_max_height);
         }
 
+        //Apply slow-down drag while timer is active
+        if(slow_timer > 0)
+        {
+            slow_timer--;
+            sprite.set_x(sprite.x() - slow_drag);
+        }
+
         animate.update();
+    }
+
+    void Swimmer::slow_down()
+    {
+        if(slow_timer == 0)
+        {
+            slow_timer = slow_duration;
+        }
     }
 }

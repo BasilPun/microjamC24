@@ -1,13 +1,12 @@
 #pragma once
 
 #include <bn_regular_bg_ptr.h>
+#include <bn_camera_ptr.h>
 
 #include "mj/mj_game.h"
 #include "aab/aab_dolphin.h"
 #include "aab/aab_swimmer.h"
 #include "aab/aab_obstacle.h"
-
-#include "bn_camera_ptr.h"
 
 namespace aab
 {
@@ -82,6 +81,11 @@ namespace aab
         Obstacle obstacle;
         bn::regular_bg_ptr background;
         bn::camera_ptr camera;
-        int slow_timer;
+        
+        static constexpr bn::fixed easy_dolphin_speed = 0.6;
+        static constexpr bn::fixed normal_dolphin_speed = 1.0;
+        static constexpr bn::fixed hard_dolphin_speed = 2.0;
+        static constexpr int finish_line_x =150;
+        static constexpr int collison_radius = 12;
     };
 }
