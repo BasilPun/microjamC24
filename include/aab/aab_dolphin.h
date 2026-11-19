@@ -10,15 +10,18 @@ namespace aab
     class Dolphin
     {
     public:
-        bn::sprite_ptr sprite;
         Dolphin(bn::fixed_point starting_position, bn::fixed dolphin_speed);
 
         void update();
-        void update_position(bn::fixed dolphin_speed);
+        void set_camera(const bn::camera_ptr& camera);
+        bn::fixed x() const;
+        bn::fixed y() const;
 
     private:
-        // bn::sprite_ptr sprite;
-        bn::sprite_animate_action<6> animate;
-        bn::fixed speed;
+        bn::sprite_ptr sprite;
+        bn::sprite_animate_action<6> _animate;
+        bn::fixed _speed;
+
+        void _update_position(bn::fixed dolphin_speed);
     };
 }

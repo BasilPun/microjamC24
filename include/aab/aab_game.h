@@ -1,6 +1,7 @@
 #pragma once
 
 #include <bn_regular_bg_ptr.h>
+#include <bn_camera_ptr.h>
 
 #include "mj/mj_game.h"
 #include "aab/aab_dolphin.h"
@@ -77,11 +78,11 @@ namespace aab
         bn::fixed recommended_dolphin_speed(mj::difficulty_level difficulty);
 
     private:
-        Dolphin dolphin;
-        Swimmer swimmer;
-        Obstacle obstacle;
-        bn::regular_bg_ptr background;
-        bn::camera_ptr camera;
-        int slow_timer;
+        Dolphin _dolphin;
+        Swimmer _swimmer;
+        Obstacle _obstacle;
+        bn::regular_bg_ptr _background;
+        bn::camera_ptr _camera;
+        int _slow_timer;
     };
 }

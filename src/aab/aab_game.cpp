@@ -8,7 +8,7 @@
 // String arrays for the credits can go in an anonymous namespace
 namespace
 {
-    constexpr bn::string_view code_credits[] = {"Basil Paija Pun & Arshdeep Singh"};
+    constexpr bn::string_view code_credits[] = {"Basil Paija Pun", "Arshdeep Singh"};
     constexpr bn::string_view graphics_credits[] = {""};
     constexpr bn::string_view sfx_credits[] = {""};
     constexpr bn::string_view music_credits[] = {""};
@@ -33,24 +33,29 @@ namespace aab
      * @param data shared information, such as a rng and number of frames left in the microgame
      */
     aab_game::aab_game([[maybe_unused]] int completed_games, [[maybe_unused]] const mj::game_data &data) : mj::game("aab"),
-                                                                                                           dolphin(Dolphin({-100, -20}, recommended_dolphin_speed(recommended_difficulty_level(completed_games, data)))),
-                                                                                                           swimmer(Swimmer({-120, 30})),
-                                                                                                           obstacle(bn::sprite_items::aab_log, bn::sprite_items::aab_rock, obstacle_amount(recommended_difficulty_level(completed_games, data)), data.random),
-                                                                                                           background(bn::regular_bg_items::aab_oceanbg.create_bg()),
-                                                                                                           camera(bn::camera_ptr::create(0, 0)),
-                                                                                                           slow_timer(0)
+                                                                                                           _dolphin(Dolphin({-100, -20}, recommended_dolphin_speed(recommended_difficulty_level(completed_games, data)))), // dolphin racing right ward
+                                                                                                           _swimmer(Swimmer({-120, 30})),
+                                                                                                           _obstacle(Obstacle(bn::sprite_items::aab_log, bn::sprite_items::aab_rock, obstacle_amount(recommended_difficulty_level(completed_games, data)), data.random)),
+                                                                                                           _background(bn::regular_bg_items::aab_oceanbg.create_bg()),
+                                                                                                           _camera(bn::camera_ptr::create(0, 0)),
+                                                                                                           _slow_timer(0)
     {
-        // play_sound(bn::sound_items::aub_tower, completed_games, data);
+        //Attach camera to spites once upon creation
+        _dolphin.set_camera(_camera);
+        _swimmer.set_camera(_camera);
+        _background.set_camera(_camera);
+        _obstacle.set_camera(_camera);
     }
 
     /**
      * The instructions given to the player at the beginning of the microgame.
      *
      * Must be <= 16 characters long
+     * TODO: SWITCH TITLE & FIND A BETTER WAY TO SHOW MOVEMENT. POSSIBLY ADDING NEW SPRITES FROM WAVE 7
      */
     bn::string<16> aab_game::title() const
     {
-        return "Race the dolphin";
+        return "Mash A to Swim!";
     }
 
     //the more games the player has completed, the more obstacles that will spawn.
@@ -94,42 +99,15 @@ namespace aab
      */
     mj::game_result aab_game::play([[maybe_unused]] const mj::game_data &data)
     {
-        // camera
-        dolphin.sprite.set_camera(camera);
-        swimmer.sprite.set_camera(camera);
-        background.set_camera(camera);
 
-        for(bn::sprite_ptr& sprite : obstacle.sprites)
-        {
-            sprite.set_camera(camera);
-        }
-
-        // add in dolphin and swimmer
-        dolphin.update();
-        swimmer.update();
+        // add in dolphin
+        _dolphin.update();
+        _swimmer.update();
+        _obstacle.update(_swimmer, _slow_timer);
 
         // updating camera
-        camera.set_position(swimmer.sprite.x(), 0);
+        _camera.set_position(_swimmer.x(), 0);
 
-        //Obstace collison check(slows down without bounce back)
-        for(bn::sprite_ptr& sprite : obstacle.sprites)
-        {
-         if(slow_timer == 0 &&
-            swimmer.sprite.x() > sprite.x() - 12 && swimmer.sprite.x() < sprite.x() + 12 &&
-            swimmer.sprite.y() > sprite.y() - 12 && swimmer.sprite.y() < sprite.y() + 12)
-         {
-            //trigger slow effect for 45 frames (0.75 secs)
-            slow_timer = 45;
-         }
-        // apply slow-down drag if timer is active
-         if (slow_timer > 0)
-         {
-             slow_timer--;
-
-             // counter forward movement so swimmer crawls forward even if boosting
-             swimmer.sprite.set_x(swimmer.sprite.x() - 0.7);
-         }
-        }
         // Creates a game result indicating whether the game is finished and whether the title should be hidden early
         mj::game_result result(victory(), false);
         return result;
@@ -142,7 +120,7 @@ namespace aab
      */
     bool aab_game::victory() const
     {
-        return swimmer.sprite.x() > dolphin.sprite.x() && (swimmer.sprite.x() > 150);
+        return _swimmer.x() > _dolphin.x() && (_swimmer.x() > 150);
     }
 
     /**

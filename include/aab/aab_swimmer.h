@@ -12,8 +12,6 @@ namespace aab
     class Swimmer
     {
     public:
-        bn::sprite_ptr sprite;
-
         /**
          * player's swimmer constructor
          *
@@ -21,18 +19,26 @@ namespace aab
          */
 
         Swimmer(bn::fixed_point starting_position);
+        void slow_down();
         void update();
+        void set_camera(const bn::camera_ptr& camera);
+        bn::fixed x() const;
+        bn::fixed y() const;
 
     private:
-        bn::sprite_animate_action<4> animate;
-        static constexpr int swimmer_min_height = 10;
-        static constexpr int swimmer_max_height = 60;
-        static constexpr float forward_speed = 10;
-        static constexpr float move_up = -5;
-        static constexpr float move_down = 5;
-        
-        static constexpr int debounce = 20;
-        int counter = 0;
-        bool buffer = false;
+        bn::sprite_ptr sprite;
+        bn::sprite_animate_action<4> _animate;
+        static constexpr int _swimmer_min_height = 10;
+        static constexpr int _swimmer_max_height = 60;
+        static constexpr float _forward_speed = 10;
+        static constexpr float _move_up = -5;
+        static constexpr float _move_down = 5;
+        static constexpr bn::fixed _slow_drag = 0.5;
+        static constexpr int _slow_duration = 45;
+
+        static constexpr int _debounce = 20;
+        int _counter = 0;
+        bool _buffer = false;
+        int _slow_timer = 0;
     };
 }
