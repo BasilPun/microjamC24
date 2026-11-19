@@ -44,6 +44,10 @@ public:
         _chosen_game = chosen_game;
     }
 
+    void set_initial_amount_of_games(int amount){
+        //set games completed to this amount. games completed in game_scene
+    }
+
     [[nodiscard]] int chosen_game() {
         return _chosen_game;
     }

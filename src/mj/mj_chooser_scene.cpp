@@ -128,6 +128,7 @@ chooser_scene::chooser_scene(core& core) :
 
         //so here might be where i want to look into
         _core.set_chosen_game(game_chosen_index);
+        //_core.set_initial_amount_of_games(num);
 
         //scene isn't probably where it'd be
         next_scene.emplace(mj::scene_type::GAME);
