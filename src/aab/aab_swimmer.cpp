@@ -73,8 +73,7 @@ namespace aab
 
         }
 
-        //tutorial over
-        if (_button_count > 5){
+        if (_button_count > _tutorial_over_number){
             _up_arrow.set_visible(false);
             _down_arrow.set_visible(false);
         }
