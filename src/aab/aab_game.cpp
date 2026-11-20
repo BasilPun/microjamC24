@@ -43,6 +43,7 @@ namespace aab
         //Attach camera to spites once upon creation
         _dolphin.set_camera(_camera);
         _swimmer.set_camera(_camera);
+        _swimmer.arrows_set_camera(_camera);
         _background.set_camera(_camera);
         _obstacle.set_camera(_camera);
     }

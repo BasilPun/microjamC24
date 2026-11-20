@@ -21,12 +21,16 @@ namespace aab
         void slow_down();
         void update();
         void set_camera(const bn::camera_ptr& camera);
+        void arrows_set_camera(const bn::camera_ptr& camera);
         bn::fixed x() const;
         bn::fixed y() const;
 
     private:
         bn::sprite_ptr sprite;
+        bn::sprite_ptr _up_arrow;
+        bn::sprite_ptr _down_arrow;
         bn::sprite_animate_action<4> _animate;
+
         static constexpr int _swimmer_min_height = 10;
         static constexpr int _swimmer_max_height = 60;
         static constexpr float _forward_speed = 10;
@@ -36,6 +40,7 @@ namespace aab
         static constexpr int _slow_duration = 45;
 
         static constexpr int _debounce = 20;
+        static constexpr int _arrow_y_offset = 10;
         int _counter = 0;
         bool _buffer = false;
         int _slow_timer = 0;
