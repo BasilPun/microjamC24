@@ -50,10 +50,14 @@ namespace aab
         if(sprite.y() < _swimmer_min_height)
         {
             sprite.set_y(_swimmer_min_height);
+            _up_arrow.set_y(_swimmer_min_height -_arrow_y_offset);
+            _down_arrow.set_y(_swimmer_min_height +_arrow_y_offset);
         }
         if(sprite.y() > _swimmer_max_height)
         {
             sprite.set_y(_swimmer_max_height);
+            _up_arrow.set_y(_swimmer_max_height -_arrow_y_offset);
+            _down_arrow.set_y(_swimmer_max_height +_arrow_y_offset);
         }
 
         //Apply slow-down drag while timer is active
@@ -61,6 +65,9 @@ namespace aab
         {
             _slow_timer--;
             sprite.set_x(sprite.x() - _slow_drag);
+            _up_arrow.set_y(_up_arrow.y() - _slow_drag);
+            _down_arrow.set_y(_down_arrow.y() - _slow_drag);
+
         }
 
         _animate.update();
