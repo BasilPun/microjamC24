@@ -44,5 +44,6 @@ namespace aab
         int _counter = 0;
         bool _buffer = false;
         int _slow_timer = 0;
+        int _button_count = 0;
     };
 }

@@ -28,6 +28,7 @@ namespace aab
             sprite.set_x(sprite.x() + _forward_speed);
             _up_arrow.set_x(_up_arrow.x() + _forward_speed);
             _down_arrow.set_x(_down_arrow.x() + _forward_speed);
+            _button_count++;
         }
         
         // up and down movment via arrow keys
@@ -37,6 +38,7 @@ namespace aab
             _up_arrow.set_y(_up_arrow.y() + _move_up);
             _down_arrow.set_y(_down_arrow.y() + _move_up);
             _buffer = true;
+            _button_count++;
         }
         if(bn::keypad::down_held() && !_buffer)
         {
@@ -44,6 +46,7 @@ namespace aab
             _up_arrow.set_y(_up_arrow.y() + _move_down);
             _down_arrow.set_y(_down_arrow.y() + _move_down);
             _buffer = true;
+            _button_count++;
         }
 
         //Bounding box / lane restriction to keep swimmer out of dolphin's lane
@@ -68,6 +71,12 @@ namespace aab
             _up_arrow.set_y(_up_arrow.y() - _slow_drag);
             _down_arrow.set_y(_down_arrow.y() - _slow_drag);
 
+        }
+
+        //tutorial over
+        if (_button_count > 5){
+            _up_arrow.set_visible(false);
+            _down_arrow.set_visible(false);
         }
 
         _animate.update();
