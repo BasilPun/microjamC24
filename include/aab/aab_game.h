@@ -76,16 +76,16 @@ namespace aab
         bn::fixed recommended_dolphin_speed(mj::difficulty_level difficulty);
 
     private:
-        Dolphin dolphin;
-        Swimmer swimmer;
-        Obstacle obstacle;
-        bn::regular_bg_ptr background;
-        bn::camera_ptr camera;
+        Dolphin _dolphin;
+        Swimmer _swimmer;
+        Obstacle _obstacle;
+        bn::regular_bg_ptr _background;
+        bn::camera_ptr _camera;
+        int _slow_timer;
         
         static constexpr bn::fixed easy_dolphin_speed = 0.6;
         static constexpr bn::fixed normal_dolphin_speed = 1.0;
         static constexpr bn::fixed hard_dolphin_speed = 2.0;
         static constexpr int finish_line_x =150;
-        static constexpr int collison_radius = 12;
     };
 }

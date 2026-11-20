@@ -1,5 +1,7 @@
 #include "aab/aab_obstacle.h"
+
 #include <bn_random.h>
+#include <bn_camera_ptr.h>
 
 namespace aab
 {
@@ -27,8 +29,30 @@ namespace aab
         }   
     }
 
-    void Obstacle::update()
+    void Obstacle::update(Swimmer &_swimmer, int &_slow_timer)
     {
         // You can leave it static or add movement here if desired
+        _collisionCheck(_swimmer, _slow_timer);
+    }
+
+    //right now, we have setters and getters for1 sprite. we want our
+    //obstacle setter and getters to be able to apply camera/ obstacle. and we wont need getters.
+    void Obstacle::set_camera(const bn::camera_ptr& camera){
+        for(bn::sprite_ptr& sprite : sprites)
+        {
+            sprite.set_camera(camera);
+        }
+    }
+
+    void Obstacle::_collisionCheck(Swimmer &_swimmer, int &_slow_timer){
+        for(bn::sprite_ptr& sprite : sprites)
+        {
+            if (_slow_timer == 0 &&
+                _swimmer.x() > sprite.x() - collison_radius && _swimmer.x() < sprite.x() + collison_radius &&
+                _swimmer.y() > sprite.y() - collison_radius && _swimmer.y() < sprite.y() + collison_radius)
+            {
+                _swimmer.slow_down();
+            }
+        }
     }
 }
