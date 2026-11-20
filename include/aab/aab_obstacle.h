@@ -1,5 +1,6 @@
 #pragma once
 
+#include "aab_swimmer.h"
 #include <bn_fixed_point.h>
 #include <bn_sprite_ptr.h>
 #include <bn_sprite_item.h>

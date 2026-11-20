@@ -1,5 +1,4 @@
 #include "aab/aab_obstacle.h"
-#include "aab/aab_swimmer.h"
 
 #include <bn_random.h>
 #include <bn_camera_ptr.h>
