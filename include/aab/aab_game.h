@@ -7,6 +7,7 @@
 #include "aab/aab_dolphin.h"
 #include "aab/aab_swimmer.h"
 #include "aab/aab_obstacle.h"
+#include "aab/aab_button.h"
 
 namespace aab
 {
@@ -79,6 +80,7 @@ namespace aab
         Dolphin _dolphin;
         Swimmer _swimmer;
         Obstacle _obstacle;
+        Button _button;
         bn::regular_bg_ptr _background;
         bn::camera_ptr _camera;
         int _slow_timer;

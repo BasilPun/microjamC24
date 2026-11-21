@@ -36,6 +36,7 @@ namespace aab
                                                                                                            _dolphin(Dolphin({-100, -20}, recommended_dolphin_speed(recommended_difficulty_level(completed_games, data)))), // dolphin racing right ward
                                                                                                            _swimmer(Swimmer({-120, 30})),
                                                                                                            _obstacle(Obstacle(bn::sprite_items::aab_log, bn::sprite_items::aab_rock, obstacle_amount(recommended_difficulty_level(completed_games, data)), data.random)),
+                                                                                                           _button(Button({-120,-50})),
                                                                                                            _background(bn::regular_bg_items::aab_oceanbg.create_bg()),
                                                                                                            _camera(bn::camera_ptr::create(0, 0)),
                                                                                                            _slow_timer(0)
@@ -46,6 +47,7 @@ namespace aab
         _swimmer.arrows_set_camera(_camera);
         _background.set_camera(_camera);
         _obstacle.set_camera(_camera);
+        _button.set_camera(_camera);
     }
     /**
      * The instructions given to the player at the beginning of the microgame.
@@ -104,6 +106,7 @@ namespace aab
         // add in dolphin
         _dolphin.update();
         _swimmer.update();
+        _button.update(_swimmer.x());
         _obstacle.update(_swimmer, _slow_timer);
 
         // updating camera

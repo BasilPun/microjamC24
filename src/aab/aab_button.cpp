@@ -1,5 +1,4 @@
 #include "aab/aab_button.h"
-#include <bn_keypad.h>
 #include "bn_sprite_items_aab_button.h"
 #include <bn_camera_ptr.h>
 
@@ -11,12 +10,20 @@ namespace aab
     {
     }
 
-    void Button::update()
+    void Button::update(bn::fixed swimmer_x)
     {   
+        update_x(swimmer_x);
         _animate.update();
     }
 
     void Button::set_camera(const bn::camera_ptr& camera){
         _sprite.set_camera(camera);
     }
+
+    void Button::update_x(bn::fixed swimmer_x)
+    {   
+        _sprite.set_x(swimmer_x);
+    }
+
+
 }

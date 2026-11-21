@@ -10,8 +10,9 @@ namespace aab
     {
     public:
         Button(bn::fixed_point starting_position);
-        void update();
+        void update(bn::fixed swimmer_x);
         void set_camera(const bn::camera_ptr& camera);
+        void update_x(bn::fixed swimmer_x);
 
     private:
         bn::sprite_ptr _sprite;
