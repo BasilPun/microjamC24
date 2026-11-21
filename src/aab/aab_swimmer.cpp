@@ -81,6 +81,7 @@ namespace aab
         _animate.update();
     }
 
+    //TODO: slow down logic feature should be refactored. with new movement logic, feels weird.
     void Swimmer::slow_down()
     {
         if(_slow_timer == 0)
@@ -93,6 +94,7 @@ namespace aab
         sprite.set_camera(camera);
     }
 
+    //TODO: arrows feel a little ugly, prettify.
     void Swimmer::arrows_set_camera(const bn::camera_ptr& camera){
         _up_arrow.set_camera(camera);
         _down_arrow.set_camera(camera);
