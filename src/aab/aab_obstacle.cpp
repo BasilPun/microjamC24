@@ -4,7 +4,8 @@
 #include <bn_camera_ptr.h>
 
 namespace aab
-{
+{   
+    //TODO: obstacles can spawn on top of each other, change that.
     Obstacle::Obstacle(bn::sprite_item log, bn::sprite_item rock, int spawn_amount, bn::random random)
     {
         random.update();
