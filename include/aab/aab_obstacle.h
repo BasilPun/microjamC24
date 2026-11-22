@@ -22,15 +22,15 @@ namespace aab
 
         private:
         //sprite vector to hold all sprites
-        bn::vector<bn::sprite_ptr, 8> sprites;
+        bn::vector<bn::sprite_ptr, 8> _sprites;
         //map is 512 pixel long.. player spawns at -120,30.
         //let objects be spawned from -80 - 500 pixels.
-        static constexpr int swimmer_min_height = 15;
-        static constexpr int swimmer_max_height = 55;
-        static constexpr int obstacle_min_width = -50;
-        static constexpr int obstacle_max_width = 120;
+        static constexpr int _swimmer_min_height = 15;
+        static constexpr int _swimmer_max_height = 55;
+        static constexpr int _obstacle_min_width = -50;
+        static constexpr int _obstacle_max_width = 120;
 
-        static constexpr int collison_radius = 12;
+        static constexpr int _collison_radius = 12;
         void _collisionCheck(Swimmer &swimmer, int &slow_timer);
     };
 }
