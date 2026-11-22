@@ -68,7 +68,7 @@ namespace aab
     } else if (difficulty == mj::difficulty_level::NORMAL) {
         return 3;
     } 
-    return 8;
+    return 4;
     }
 
     bn::fixed aab_game::recommended_dolphin_speed(mj::difficulty_level difficulty) {
