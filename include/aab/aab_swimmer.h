@@ -40,7 +40,7 @@ namespace aab
         static constexpr int _slow_duration = 45;
 
         static constexpr int _debounce = 20;
-        static constexpr int _arrow_y_offset = 15;
+        static constexpr int _arrow_y_offset = 10;
         static constexpr int _tutorial_over_number = 5;
         int _counter = 0;
         bool _buffer = false;
