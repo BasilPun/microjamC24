@@ -23,6 +23,9 @@ namespace aab
         private:
         //sprite vector to hold all sprites
         bn::vector<bn::sprite_ptr, 8> _sprites;
+        //animation for explosion
+        bn::optional<bn::sprite_ptr> _explosion;
+        int _explosion_timer;
         //map is 512 pixel long.. player spawns at -120,30.
         //let objects be spawned from -80 - 500 pixels.
         static constexpr int _swimmer_min_height = 15;

@@ -2,6 +2,7 @@
 
 #include <bn_random.h>
 #include <bn_camera_ptr.h>
+#include "bn_sprite_items_aab_explosion.h"
 
 namespace aab
 {   
@@ -34,6 +35,27 @@ namespace aab
     {
         // You can leave it static or add movement here if desired
         _collisionCheck(_swimmer, _slow_timer);
+
+        if(_explosion){
+
+            _explosion_timer++;
+            //set up manual animation
+            if (_explosion_timer >= 10 && _explosion_timer < 20)
+            {
+                _explosion.value().set_item(bn::sprite_items::aab_explosion, 1);
+            }
+            else if (_explosion_timer >= 20 && _explosion_timer < 30)
+            {
+                _explosion.value().set_item(bn::sprite_items::aab_explosion, 2);
+            }
+            else if (_explosion_timer >= 30 && _explosion_timer < 35)
+            {
+                _explosion.value().set_item(bn::sprite_items::aab_explosion, 3);
+            }
+            else if (_explosion_timer >= 35){
+                _explosion.reset();
+            }
+        }
     }
 
     //right now, we have setters and getters for1 sprite. we want our
@@ -53,10 +75,19 @@ namespace aab
                 _swimmer.x() > sprite.x() - _collison_radius && _swimmer.x() < sprite.x() + _collison_radius &&
                 _swimmer.y() > sprite.y() - _collison_radius && _swimmer.y() < sprite.y() + _collison_radius)
             {
+                //switch to explosion sprite
+                sprite.set_item(bn::sprite_items::aab_explosion, 0);
+                //point to sprite
+                _explosion = sprite;
+                _explosion_timer = 0;
+
+                //go through animation once
+                //_explosion = bn::create_sprite_animate_action_once(sprite,8,bn::sprite_items::aab_explosion.tiles_item(),0, 1, 2, 3);
+                //delete the sprite
                 _sprites.erase(_sprites.begin() + counter);
                 _swimmer.slow_down();
 
-                //counter is messed up, break out
+                //counter is off, will cause error. break
                 break;
             }
             counter++;
