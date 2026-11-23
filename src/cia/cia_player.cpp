@@ -52,4 +52,14 @@ namespace cia
             _sprite.set_y(_sprite.y() + _speed);
         }
     }
+
+    /**
+     * Method that returns the x position of the player as a bn::fixed variable
+     */
+    bn::fixed player::get_x() const { return _sprite.x(); }
+
+    /**
+     * Method that returns the y position of the player as a bn::fixed variable
+     */
+    bn::fixed player::get_y() const { return _sprite.y(); }
 }

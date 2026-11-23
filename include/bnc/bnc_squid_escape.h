@@ -1,17 +1,14 @@
 #pragma once 
 
 #include "mj/mj_game.h"
-#include "bnc/bnc_minnow.h"
-#include "bnc/bnc_shark.h"
+#include "bnc/bnc_squid.h"
+#include "bnc/bnc_whale.h"
 
 
 namespace bnc {
-    /**
- * bnc is a class representing a microgame where the player must leave the screen.
- * 
- * Like all microgames, it is a public subclass of mj::game
- */
-    class bnc_fish_escape : public mj::game {
+
+    class bnc_squid_escape : public mj::game {
+
         public:
          /**
          * Constructor for an instance of an bnc_fish_escape
@@ -19,7 +16,7 @@ namespace bnc {
          * @param completed_games how many microgames the player has completed so far
          * @param data shared information, such as a rng and number of frames left in the microgame
          */
-        bnc_fish_escape(int completed_games, const mj::game_data& data);
+        bnc_squid_escape(int completed_games, const mj::game_data& data);
 
         /**
          * The instructions given to the player at the beginning of the microgame.
@@ -71,11 +68,16 @@ namespace bnc {
 
         private:
         // The character that the player can move
-        Minnow _minnow;
-        //enemy player tries to avoid
-        static constexpr int MAX_SHARKS = 3;
+        Squid _squid;
 
-        //shark vector
-        bn::vector<Shark, MAX_SHARKS> _shark_vector = {};
+        //whale vector
+        static constexpr int MAX_WHALES = 9;
+        
+        //whale vector;
+        bn::vector<Whale, MAX_WHALES> _whale_vector = {};
+
+        // Returns progressively more whales the harder the difficulty
+        int _whale_increase(mj::difficulty_level difficulty);
+
     };
 }

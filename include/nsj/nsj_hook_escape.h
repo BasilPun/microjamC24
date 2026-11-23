@@ -2,8 +2,10 @@
 #include "mj/mj_game.h"
 #include <bn_regular_bg_ptr.h>
 #include <bn_sprite_ptr.h>
+#include "bn_vector.h"
 #include "nsj_player.h"
 #include "nsj_Enemy.h"
+#include "nsj_Shark.h"
 
 namespace nsj
 {
@@ -69,6 +71,11 @@ namespace nsj
     private:
         // The character that the player can move
         player _player;
-        Enemy _enemy;
+        static constexpr int MAX_ENEMIES = 2;
+        bn::vector<Enemy, MAX_ENEMIES> _enemies;
+        bool _hooked = false;
+        Shark _Shark;
+        bn::fixed _recommended_hook_speed(mj::difficulty_level difficulty);
+        bn::fixed _recommended_shark_speed(mj::difficulty_level difficulty);
     };
-}
+};

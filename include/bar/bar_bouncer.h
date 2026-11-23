@@ -44,10 +44,9 @@ namespace bar
         static constexpr int MIN_Y = -bn::display::height() / 2;
 
         bn::sprite_ptr _sprite;
-        bn::fixed _horizontal_speed;
+        bn::fixed _vertical_speed;
         bn::size _size;
         bn::rect _bounding_box;
-        bool _is_hit;
-        bool _is_collided;
+        bool _collided;
     };
 }

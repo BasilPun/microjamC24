@@ -4,7 +4,6 @@
 #include <bn_sprite_ptr.h>
 #include <bn_rect.h>
 #include <bn_fixed.h>
-#include <bn_random.h>
 #include <bn_size.h>
 #include "luv/luv_methods.h"
 

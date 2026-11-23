@@ -9,7 +9,7 @@ namespace luv {
 
     }
     
-    //Get the player bounding box
+    //Get the anemone bounding box
      bn::rect luv_anemone::get_bounding_box() {
         return _bounding_box;
     };
