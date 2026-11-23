@@ -26,7 +26,7 @@ namespace aab
         bn::fixed y() const;
 
     private:
-        bn::sprite_ptr sprite;
+        bn::sprite_ptr _sprite;
         bn::sprite_ptr _up_arrow;
         bn::sprite_ptr _down_arrow;
         bn::sprite_animate_action<4> _animate;

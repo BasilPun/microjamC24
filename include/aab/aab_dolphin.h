@@ -18,7 +18,7 @@ namespace aab
         bn::fixed y() const;
 
     private:
-        bn::sprite_ptr sprite;
+        bn::sprite_ptr _sprite;
         bn::sprite_animate_action<6> _animate;
         bn::fixed _speed;
 

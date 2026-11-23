@@ -9,9 +9,14 @@
 namespace
 {
     constexpr bn::string_view code_credits[] = {"Basil Paija Pun", "Arshdeep Singh"};
-    constexpr bn::string_view graphics_credits[] = {""};
+    constexpr bn::string_view graphics_credits[] = {"Basil Paija Pun", "Arshdeep Singh"};
     constexpr bn::string_view sfx_credits[] = {""};
     constexpr bn::string_view music_credits[] = {""};
+
+    constexpr bn::fixed_point dolphin_start_pos = {-100, -20};
+    constexpr bn::fixed_point swimmer_start_pos = {-120, 30};
+    constexpr bn::fixed_point obstacle_start_pos = {0, 35};
+    
 }
 
 // Macros used to add game to game list
@@ -33,8 +38,8 @@ namespace aab
      * @param data shared information, such as a rng and number of frames left in the microgame
      */
     aab_game::aab_game([[maybe_unused]] int completed_games, [[maybe_unused]] const mj::game_data &data) : mj::game("aab"),
-                                                                                                           _dolphin(Dolphin({-100, -20}, recommended_dolphin_speed(recommended_difficulty_level(completed_games, data)))), // dolphin racing right ward
-                                                                                                           _swimmer(Swimmer({-120, 30})),
+                                                                                                           _dolphin(Dolphin({dolphin_start_pos}, recommended_dolphin_speed(recommended_difficulty_level(completed_games, data)))),
+                                                                                                           _swimmer(Swimmer({swimmer_start_pos})),
                                                                                                            _obstacle(Obstacle(bn::sprite_items::aab_log, bn::sprite_items::aab_rock, obstacle_amount(recommended_difficulty_level(completed_games, data)), data.random)),
                                                                                                            _button(Button({-120,-50})),
                                                                                                            _background(bn::regular_bg_items::aab_oceanbg.create_bg()),
