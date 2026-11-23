@@ -42,6 +42,20 @@ namespace cia
          */
         bn::fixed_rect rect() const;
 
+        /**
+         * Returns the x position of the player
+         *
+         * @return A bn::fixed of the x poisition of the player
+         */
+        bn::fixed get_x() const;
+
+        /**
+         * Returns the y position of the player
+         *
+         * @return A bn::fixed of the y poisition of the player
+         */
+        bn::fixed get_y() const;
+
     private:
         // The player sprite
         bn::sprite_ptr _sprite;

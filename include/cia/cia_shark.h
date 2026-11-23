@@ -4,6 +4,9 @@
 #include <bn_fixed_point.h>
 #include <bn_sprite_ptr.h>
 #include <bn_display.h>
+#include <bn_random.h>
+
+#include "cia_player.h"
 
 namespace cia
 {
@@ -14,9 +17,10 @@ namespace cia
         static constexpr int MIN_X = -bn::display::width() / 2 - 20;
 
     public:
-        shark(bn::fixed_point starting_position, bn::fixed speed);
-        void update();
+        shark(bn::random &rng, bn::fixed speed);
+        void update(cia::player &player);
         bn::fixed_rect rect() const;
+        bn::fixed_point getRandomStartPos(bn::random &random) const;
 
     private:
         bn::sprite_ptr _sprite;

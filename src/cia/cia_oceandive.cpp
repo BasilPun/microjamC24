@@ -8,6 +8,25 @@ namespace
     constexpr bn::string_view graphics_credits[] = {""};
     constexpr bn::string_view sfx_credits[] = {""};
     constexpr bn::string_view music_credits[] = {""};
+
+    bn::fixed shark_speed(mj::difficulty_level level)
+    {
+        // create a if statement for an easy mode
+        if (level == mj::difficulty_level::EASY)
+        {
+            return .5;
+        }
+        // make a medium mode
+        else if (level == mj::difficulty_level::NORMAL)
+        {
+            return .7;
+        }
+        // Assuming that we didn't go into the other if statements (This is for hard mode)
+        else
+        {
+            return .8 ;
+        }
+    }
 }
 
 MJ_GAME_LIST_ADD(cia::cia_oceandive)
@@ -18,10 +37,10 @@ MJ_GAME_LIST_ADD_SFX_CREDITS(sfx_credits)
 
 namespace cia
 {
-    cia_oceandive::cia_oceandive([[maybe_unused]] int completed_game, [[maybe_unused]] const mj::game_data &data) : mj::game("cia"),
-                                                                                                                    _player(player({0, 20}, 1)),
-                                                                                                                    _shark(shark({130, 20}, 1)),
-                                                                                                                    _hit(false)
+    cia_oceandive::cia_oceandive([[maybe_unused]] int completed_game, const mj::game_data &data) : mj::game("cia"),
+                                                                                                   _player(player({0, 20}, 1)),
+                                                                                                   _shark(shark(data.random, shark_speed(recommended_difficulty_level(completed_game, data)))),
+                                                                                                   _hit(false)
     {
     }
 
@@ -38,7 +57,7 @@ namespace cia
     mj::game_result cia_oceandive::play(const mj::game_data &)
     {
         _player.update();
-        _shark.update();
+        _shark.update(_player);
 
         // If the player intersects with the shark, the player loses.
         if (_player.rect().intersects(_shark.rect()))
