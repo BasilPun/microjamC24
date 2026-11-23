@@ -12,7 +12,7 @@ namespace aab
     class Obstacle
     {
         public:
-        Obstacle(bn::sprite_item log, bn::sprite_item rock, int spawn_amount, bn::random random);
+        Obstacle(bn::sprite_item log, bn::sprite_item rock, int spawn_amount, bn::random& random);
 
         void update(Swimmer &swimmer, int &slow_timer);
         void set_camera(const bn::camera_ptr& camera);

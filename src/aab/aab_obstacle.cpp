@@ -5,7 +5,7 @@
 
 namespace aab
 {
-    Obstacle::Obstacle(bn::sprite_item log, bn::sprite_item rock, int spawn_amount, bn::random random)
+    Obstacle::Obstacle(bn::sprite_item log, bn::sprite_item rock, int spawn_amount, bn::random%& random)
     {
         random.update();
         for(int i =0; i < spawn_amount; i++){
