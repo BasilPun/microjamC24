@@ -46,14 +46,20 @@ namespace aab
     }
 
     void Obstacle::_collisionCheck(Swimmer &_swimmer, int &_slow_timer){
+        int counter = 0;
         for(bn::sprite_ptr& sprite : _sprites)
-        {
+        {   
             if (_slow_timer == 0 &&
                 _swimmer.x() > sprite.x() - _collison_radius && _swimmer.x() < sprite.x() + _collison_radius &&
                 _swimmer.y() > sprite.y() - _collison_radius && _swimmer.y() < sprite.y() + _collison_radius)
             {
+                _sprites.erase(_sprites.begin() + counter);
                 _swimmer.slow_down();
+
+                //counter is messed up, break out
+                break;
             }
+            counter++;
         }
     }
 }
