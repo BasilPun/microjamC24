@@ -11,10 +11,27 @@ namespace aab
     {
         random.update();
         for(int i =0; i < spawn_amount; i++){
+            // Space each obstacle into its own x range so they don't stack
+            int range_start = 100 + (i * 100);
+            int range_end = range_start + 100;
+
+            if (range_start < _obstacle_min_width)
+            {
+                range_start = _obstacle_min_width;
+            }
+            if (range_end > _obstacle_max_width)
+            {
+                range_end = _obstacle_max_width;
+            }
+            if (range_end < range_start)
+            {
+                range_start = _obstacle_min_width;
+                range_end = _obstacle_max_width;
+            }
             //random coordinates
             //a) should be within swimmer's bound
             //b) should be good amount of space away from swimmer's spawn
-            int x = random.get_unbiased_int(_obstacle_min_width, _obstacle_max_width);
+            int x = random.get_unbiased_int(range_start, range_end);
             int y = random.get_unbiased_int(_swimmer_min_height, _swimmer_max_height);
 
             int isLog = random.get_unbiased_int(0,2);
