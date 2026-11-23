@@ -99,7 +99,6 @@ namespace aab
                 _explosion_timer = 0;
 
                 //go through animation once
-                //_explosion = bn::create_sprite_animate_action_once(sprite,8,bn::sprite_items::aab_explosion.tiles_item(),0, 1, 2, 3);
                 //delete the sprite
                 _sprites.erase(_sprites.begin() + counter);
                 _swimmer.slow_down();

@@ -62,7 +62,6 @@ namespace aab
             _up_arrow.set_y(_swimmer_max_height -_arrow_y_offset);
             _down_arrow.set_y(_swimmer_max_height +_arrow_y_offset);
         }
-
         //Apply slow-down drag while timer is active
         if(_slow_timer > 0)
         {
@@ -72,7 +71,6 @@ namespace aab
             _down_arrow.set_y(_down_arrow.y() - _slow_drag);
 
         }
-
         if (_button_count > _tutorial_over_number){
             _up_arrow.set_visible(false);
             _down_arrow.set_visible(false);

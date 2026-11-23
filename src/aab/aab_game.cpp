@@ -58,7 +58,7 @@ namespace aab
      * The instructions given to the player at the beginning of the microgame.
      *
      * Must be <= 16 characters long
-     * TODO: SWITCH TITLE & FIND A BETTER WAY TO SHOW MOVEMENT. POSSIBLY ADDING NEW SPRITES FROM WAVE 7
+     * TODO: POSSIBLY ADDING NEW SPRITES FROM WAVE 7
      */
     bn::string<16> aab_game::title() const
     {

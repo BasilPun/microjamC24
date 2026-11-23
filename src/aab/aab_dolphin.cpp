@@ -14,7 +14,7 @@ namespace aab
         _animate(bn::create_sprite_animate_action_forever(_sprite, 10, bn::sprite_items::aab_dolphin.tiles_item(), 0, 1, 2, 3, 4, 5)),
         _speed(dolphin_speed)
     {
-        //set different speeds for easy, medium, hard
+        //set different speeds for easy, medium, hard.
     }
 
     void Dolphin::update()
