@@ -16,6 +16,7 @@ namespace
     constexpr bn::fixed_point dolphin_start_pos = {-100, -20};
     constexpr bn::fixed_point swimmer_start_pos = {-120, 30};
     constexpr bn::fixed_point obstacle_start_pos = {0, 35};
+    constexpr int min_victory_x = 150;
     
 }
 
@@ -125,7 +126,7 @@ namespace aab
      */
     bool aab_game::victory() const
     {
-        return _swimmer.x() > _dolphin.x() && (_swimmer.x() > 150);
+        return _swimmer.x() > _dolphin.x() && (_swimmer.x() > min_victory_x);
     }
 
     /**
