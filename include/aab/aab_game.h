@@ -85,9 +85,9 @@ namespace aab
         bn::camera_ptr _camera;
         int _slow_timer;
         
-        static constexpr bn::fixed easy_dolphin_speed = 0.5;
-        static constexpr bn::fixed normal_dolphin_speed = 0.7;
-        static constexpr bn::fixed hard_dolphin_speed = 0.95;
-        static constexpr int finish_line_x =150;
+        static constexpr bn::fixed _easy_dolphin_speed = 0.5;
+        static constexpr bn::fixed _normal_dolphin_speed = 0.7;
+        static constexpr bn::fixed _hard_dolphin_speed = 0.95;
+        static constexpr int _finish_line_x =150;
     };
 }

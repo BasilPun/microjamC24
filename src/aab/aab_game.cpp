@@ -79,11 +79,11 @@ namespace aab
 
     bn::fixed aab_game::recommended_dolphin_speed(mj::difficulty_level difficulty) {
     if(difficulty == mj::difficulty_level::EASY) {
-        return easy_dolphin_speed;
+        return _easy_dolphin_speed;
     } else if (difficulty == mj::difficulty_level::NORMAL) {
-        return normal_dolphin_speed;
+        return _normal_dolphin_speed;
     } 
-    return hard_dolphin_speed;
+    return _hard_dolphin_speed;
     }
 
     /**
@@ -131,7 +131,7 @@ namespace aab
      */
     bool aab_game::victory() const
     {
-        return _swimmer.x() > _dolphin.x() && (_swimmer.x() > finish_line_x);
+        return _swimmer.x() > _dolphin.x() && (_swimmer.x() > _finish_line_x);
     }
 
     /**
