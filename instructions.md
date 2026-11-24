@@ -292,7 +292,7 @@ Make/run, then add/commit/push.
 ### Submitting
 Make a new PR! If you want to continue work past this, please make a new branch to continue your work. Please submit your PR link on Canvas.
 
-## Wave 8: Audio and final bugfixing
+## Wave 8: Audio
 
 FIRST ADDRESS ANY OPEN FEEDBACK IN PRs. IF YOU ARE WAITING FOR MORE FEEDBACK, PLEASE MAKE A NEW BRANCH.
 
@@ -338,12 +338,13 @@ Commit/add/push
 
 ### Polish and fix
 
-This will be the final wave. Please make sure your game is in a state you are proud of. Fix any bugs, but now is NOT the time to add new features other than the sounds.
+Please make sure your game is in a state you are proud of.
 
+- Incorporate new feedback from classmates, and any improvements you would like.
 - Make sure there are no warnings
 - Make sure you have a separate license file for each sound/music
 - Make sure there are no bugs.
 - Make sure your difficulty is not too hard. Better to be too easy than too hard!
 
 ### Submitting
-Make a new PR! Please submit your PR link on Canvas. **BE READY TO ADDRESS FEEDBACK QUICKLY**. We are almost at our deadline, and there can be NO EXTENSIONS FOR ANY REASON.
+Make a new PR! Please submit your PR link on Canvas.
