@@ -5,9 +5,8 @@
 #include "bn_sprite_items_aab_explosion.h"
 
 namespace aab
-{   
-    //TODO: obstacles can spawn on top of each other, change that.
-    Obstacle::Obstacle(bn::sprite_item log, bn::sprite_item rock, int spawn_amount, bn::random random)
+{
+    Obstacle::Obstacle(bn::sprite_item log, bn::sprite_item rock, int spawn_amount, bn::random& random)
     {
         random.update();
         for(int i =0; i < spawn_amount; i++){
@@ -33,16 +32,15 @@ namespace aab
             //b) should be good amount of space away from swimmer's spawn
             int x = random.get_unbiased_int(range_start, range_end);
             int y = random.get_unbiased_int(_swimmer_min_height, _swimmer_max_height);
-
-            int isLog = random.get_unbiased_int(0,2);
-            if(isLog == 1){
+            
+            if(random.get_bool()){
                 bn::sprite_ptr s = log.create_sprite(x, y);
-                s.set_bg_priority(0);
+                s.set_bg_priority(2);
                 _sprites.push_back(s);
             }
             else{
                 bn::sprite_ptr s = rock.create_sprite(x, y);
-                s.set_bg_priority(0);
+                s.set_bg_priority(2);
                 _sprites.push_back(s);
             }
         }   

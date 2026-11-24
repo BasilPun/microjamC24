@@ -16,6 +16,7 @@ namespace
     constexpr bn::fixed_point dolphin_start_pos = {-100, -20};
     constexpr bn::fixed_point swimmer_start_pos = {-120, 30};
     constexpr bn::fixed_point obstacle_start_pos = {0, 35};
+    constexpr int min_victory_x = 150;
     
 }
 

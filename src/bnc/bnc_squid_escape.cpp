@@ -1,10 +1,11 @@
-#include "bnc_fish_escape.h"
+#include "bnc_squid_escape.h"
+
 #include "bn_keypad.h"
 #include "bn_display.h"
 #include "bn_sprite_ptr.h"
 #include "mj/mj_game_list.h"
-#include "bnc/bnc_minnow.h"
-#include "bnc/bnc_shark.h"
+#include "bnc/bnc_squid.h"
+#include "bnc/bnc_whale.h"
 
 // String arrays for the credits can go in an anonymous namespace
 namespace
@@ -16,7 +17,7 @@ namespace
 }
 
 // Macros used to add game to game list
-MJ_GAME_LIST_ADD(bnc::bnc_fish_escape) // The class of the game is used here
+MJ_GAME_LIST_ADD(bnc::bnc_squid_escape) // The class of the game is used here
 MJ_GAME_LIST_ADD_CODE_CREDITS(code_credits)
 MJ_GAME_LIST_ADD_GRAPHICS_CREDITS(graphics_credits)
 MJ_GAME_LIST_ADD_MUSIC_CREDITS(music_credits)
@@ -25,40 +26,51 @@ MJ_GAME_LIST_ADD_SFX_CREDITS(sfx_credits)
 namespace bnc
 {
     /**
- * Constructor for an instance of an bnc_fish_escape
+ * Constructor for an instance of an bnc_squid_escape
  * 
  * First item in the initializer list MUST be a call to the superclass, mj::game with the identifier for the microgame.
  * 
  * @param completed_games how many microgames the player has completed so far
  * @param data shared information, such as a rng and number of frames left in the microgame
  */
-    bnc_fish_escape::bnc_fish_escape([[maybe_unused]] int completed_games, [[maybe_unused]] const mj::game_data& data) :
-    mj::game("bnc"), _minnow(bn::fixed_point(X_START, Y_START), SPEED) {
-        while(_shark_vector.size() < _shark_vector.max_size()) {
-            //add more sharks and randomly spawn them on the screen
-            _shark_vector.push_back(Shark(
+    bnc_squid_escape::bnc_squid_escape(
+        int completed_games,
+        const mj::game_data& data) : mj::game("bnc"), 
+        _squid(bn::fixed_point(X_START, Y_START), SPEED)
+    {
+
+        while(_whale_vector.size() < _whale_increase(recommended_difficulty_level(completed_games, data))) {
+            _whale_vector.push_back(Whale(
             data.random.get_unbiased_fixed(MIN_X, MAX_X),
             data.random.get_unbiased_fixed(MIN_Y, MAX_Y),
-            SHARK_SPEED));
-
+            WHALE_SPEED));
         }
-    }
+    };
 
     /**
  * The instructions given to the player at the beginning of the microgame.
  * 
  * Must be <= 16 characters long
  */
-    bn::string<16> bnc_fish_escape::title() const {
+    bn::string<16> bnc_squid_escape::title() const {
     return "Swim across -->";
-    }
+}
 
- /**
+int bnc_squid_escape::_whale_increase(mj::difficulty_level difficulty) {
+    if(difficulty == mj::difficulty_level::EASY) {
+        return 3;
+    } else if (difficulty == mj::difficulty_level::NORMAL) {
+        return 4;
+    } 
+    return 5;
+}
+
+/*
  * How long the timer for the game should be set to in frames.
  * 
  * GBA runs at approx 60 frames per second.
  */
-    int bnc_fish_escape::total_frames() const {
+    int bnc_squid_escape::total_frames() const {
         return 600; 
     }
 
@@ -72,45 +84,45 @@ namespace bnc
  * @param data shared information, such as a rng and number of frames left in the microgame
  * @return the mj::game result indicating whether the game has finished and whether the title should be hidden
  */
-mj::game_result bnc_fish_escape::play([[maybe_unused]] const mj::game_data& data)
-    {
-        // update the player position
-        _minnow.update();
+mj::game_result bnc_squid_escape::play([[maybe_unused]] const mj::game_data& data)
+{
+    // update the player position
+    _squid.update();
 
-        //boolean for individual shark
-        bool _caught_minnow = false;
+    //add another boolean for individual sharks
+    bool _caught_squid = false;
+    
+    //add the for loop to loop over enemies
+    for(int i = 0; i< _whale_vector.size(); i++){
+        //update the vector to the players location using the index
+        _whale_vector[i].update(_squid);
 
-        //loop over enemies and check for collision
-        for(int i = 0; i < _shark_vector.size(); i++) {
-            _shark_vector[i].update(_minnow);
-            //If minnow collides with shark, end the game
-            if(_shark_vector[i].get_shark_collision()) {
-                _caught_minnow = true;
-            }
+        if(_whale_vector[i].get_whale_collision()) {
+
+            _caught_squid = true;
         }
-
-        // Creates a game result indicating whether the game is finished and whether the title should be hidden early
-        // For this game the game should end early if the player has won (if victory returns true)
-        // The title is not hidden early (false is passed), so the title disappears at the default time
-        mj::game_result result(victory() || _caught_minnow, false);
-        return result;
     }
+
+    mj::game_result result(victory() || _caught_squid, false);
+    return result;
+}
+
 
  /**
  * Returns whether the player has won the microgame.
  * 
  * In this particular microgame the player wins if they make the ball leave the screen.
  */
-    bool bnc_fish_escape::victory() const {
-        return _minnow.out_of_bounds();
-    }
+bool bnc_squid_escape::victory() const {
+    return _squid.out_of_bounds();
+}
 
  /**
  * Called repeatedly as the game fades into view. Unused for this particular microgame.
  * 
  * @param data shared information, such as a rng and number of frames left in the microgame
  */
-    void bnc_fish_escape::fade_in([[maybe_unused]] const mj::game_data& data)
+    void bnc_squid_escape::fade_in([[maybe_unused]] const mj::game_data& data)
     {
     }
 
@@ -119,7 +131,7 @@ mj::game_result bnc_fish_escape::play([[maybe_unused]] const mj::game_data& data
  * 
  * @param data shared information, such as a rng and number of frames left in the microgame
  */
-    void bnc_fish_escape::fade_out([[maybe_unused]] const mj::game_data& data)
+    void bnc_squid_escape::fade_out([[maybe_unused]] const mj::game_data& data)
     {
     }
 
