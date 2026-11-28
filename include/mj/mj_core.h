@@ -54,6 +54,10 @@ public:
 
     void update();
 
+    //setters and getters for completed games.
+    void core::set_amount_of_games(int custom_amount_of_games);
+    int core::get_amount_of_games();
+    //edge cases reset
 private:
     bn::sprite_text_generator _text_generator;
     bn::sprite_text_generator _small_text_generator;
@@ -62,6 +66,7 @@ private:
     mj::sram_data _sram_data;
     bool _reset_ready = false;
     int _chosen_game = -1;
+    int _amount_of_games;
 
     void _update_keypad();
 };

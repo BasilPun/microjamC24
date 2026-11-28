@@ -78,4 +78,14 @@ void core::_update_keypad()
     }
 }
 
+void core::set_amount_of_games(int custom_amount_of_games)
+{
+    _amount_of_games = custom_amount_of_games;
+}
+
+int core::get_amount_of_games()
+{
+    return _amount_of_games;
+}
+
 }
