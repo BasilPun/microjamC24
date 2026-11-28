@@ -64,8 +64,8 @@ game_scene::game_scene(bool start_with_zoom_out, core& core) :
     _core(core),
     _data({ core.text_generator(), core.small_text_generator(), core.big_text_generator(), core.random(), 0, false }),
     _pause(core),
-    _music_tempo(game::recommended_music_tempo(MJ_INITIAL_COMPLETED_GAMES, _data)),
-    _completed_games(MJ_INITIAL_COMPLETED_GAMES),
+    _music_tempo(game::recommended_music_tempo(core.get_amount_of_games(), _data)),
+    _completed_games(core.get_amount_of_games()),
     _big_ufo_stage(start_with_zoom_out ? 13 : 0),
     _fade_in_frames(start_with_zoom_out ? 0 : fade_in_frames),
     _big_ufo_inc(! start_with_zoom_out)
