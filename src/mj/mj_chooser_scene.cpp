@@ -120,7 +120,17 @@ chooser_scene::chooser_scene(core& core) :
         // will start the game. ADD INPUT FOR DIFFICULTY
         //difficulty chosen can be got by seeing amount of cursor index increases since game_chosen_index
         int difficulty_level_chosen = _cursor_idx - game_chosen_index;
-
+        int initial_amount_of_games;
+        //0-8 is easy, 9-17 is medium, 18+ is hard
+        if (difficulty_level_chosen == 1){
+            initial_amount_of_games = 0;
+        }
+        else if(difficulty_level_chosen == 2){
+            initial_amount_of_games = 9;
+        }
+        else{
+            initial_amount_of_games = 18;
+        }
         //sram seems to contain data about the microjam itself
         auto& sram_data = _core.sram_data();
         sram_data.set_chosen_game(game_chosen_index);
@@ -128,7 +138,7 @@ chooser_scene::chooser_scene(core& core) :
 
         //so here might be where i want to look into
         _core.set_chosen_game(game_chosen_index);
-        //_core.set_initial_amount_of_games(num);
+        _core.set_amount_of_games(initial_amount_of_games);
 
         //scene isn't probably where it'd be
         next_scene.emplace(mj::scene_type::GAME);
